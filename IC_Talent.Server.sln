@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IC_Talent.Server", "IC_Talent.Server\IC_Talent.Server.csproj", "{05CCB174-2E48-4877-95E5-DB4AB25B0DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IC_Talent.Database", "IC_Talent.Database\IC_Talent.Database.csproj", "{69869198-D5B6-4179-B0CE-92942482FA46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05CCB174-2E48-4877-95E5-DB4AB25B0DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CCB174-2E48-4877-95E5-DB4AB25B0DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CCB174-2E48-4877-95E5-DB4AB25B0DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CCB174-2E48-4877-95E5-DB4AB25B0DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69869198-D5B6-4179-B0CE-92942482FA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69869198-D5B6-4179-B0CE-92942482FA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69869198-D5B6-4179-B0CE-92942482FA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69869198-D5B6-4179-B0CE-92942482FA46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A3E5B20-BC26-4744-8E13-0E56599503F4}
+	EndGlobalSection
+EndGlobal
