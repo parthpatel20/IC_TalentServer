@@ -22,7 +22,7 @@ namespace IC_Talent.Server.RepositoryServices.Services
         {
             await _dataContext.Customers.AddAsync(customer);
             var created = await _dataContext.SaveChangesAsync();
-            if (created > 0) return convertToCustomerResponse( customer);
+            if (created > 0) return ConvertToCustomerResponse( customer);
             return null ;
         }
 
@@ -37,7 +37,7 @@ namespace IC_Talent.Server.RepositoryServices.Services
 
         public async Task<GetCustomerResponse> GetCustomerByIDAsync(int customerId)
         {
-           return convertToCustomerResponse( await _dataContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId));            
+           return ConvertToCustomerResponse( await _dataContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId));            
         }
 
         public async Task<List<GetCustomerResponse>> GetCustomersAsync()
@@ -48,7 +48,7 @@ namespace IC_Talent.Server.RepositoryServices.Services
 
             foreach(var customer in customers)
             {
-                customerList.Add(convertToCustomerResponse(customer));
+                customerList.Add(ConvertToCustomerResponse(customer));
             }
             return customerList;
         }
@@ -69,7 +69,7 @@ namespace IC_Talent.Server.RepositoryServices.Services
             return null;
         }
 
-        private GetCustomerResponse convertToCustomerResponse(Customer customer)
+        private GetCustomerResponse ConvertToCustomerResponse(Customer customer)
         {
             GetCustomerResponse convertToResponseCustomer = new GetCustomerResponse()
             {

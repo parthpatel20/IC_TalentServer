@@ -1,4 +1,5 @@
 ﻿using IC_Talent.Database;
+using IC_Talent.Database.ApiEntity.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +10,13 @@ namespace IC_Talent.Server.RepositoryServices.Interface
     public interface ISales
     {
 
-        Task<List<Sales>> GetSalesAsync();
+        Task<List<GetSalesResponse>> GetSalesAsync();
 
-        Task<Sales> GetSalesByIDAsync(int SaleId);
-        Task<bool> CreateSalesAsync(Sales Sale);
-        Task<bool> UpdateSalesAsync(Sales SaleToUpdate);
+        Task<GetSalesResponse> GetSalesByIDAsync(int saleId);
+        Task<GetSalesResponse> CreateSalesAsync(Sales postSale);
 
-        Task<bool> DeleteSalesAsync(int id);
+        Task<GetSalesResponse> UpdateSalesAsync(Sales saleToUpdate);
+        Task<bool> DeleteSalesAsync(int saleId);
 
     }
 }

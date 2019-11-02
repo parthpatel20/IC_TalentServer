@@ -57,7 +57,7 @@ namespace IC_Talent.Server.Controllers
 
                 if (created != null) return Ok(created);
 
-                return NoContent();
+                return NotFound("Data Not Created");
             }
 
             return ValidationProblem();
@@ -68,16 +68,20 @@ namespace IC_Talent.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer
+                if (updateToCustomer.Id.Equals(customerId))
                 {
-                    Id = customerId,
-                    Name = updateToCustomer.Name,
-                    Address = updateToCustomer.Address
-                };
-                var updated = await _customerServices.UpdateCustomerAsync(customer);
+                    Customer customer = new Customer
+                    {
+                        Id = customerId,
+                        Name = updateToCustomer.Name,
+                        Address = updateToCustomer.Address
+                    };
+                    var updated = await _customerServices.UpdateCustomerAsync(customer);
 
-                if (updated != null) return Ok(updated);
-
+                    if (updated != null) return Ok(updated);
+                    return NotFound("Data Not Updated");
+                }
+                return ValidationProblem("route and data id need to be same");
             }
         return ValidationProblem(); 
          

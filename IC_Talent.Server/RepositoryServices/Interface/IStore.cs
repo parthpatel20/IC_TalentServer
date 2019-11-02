@@ -1,4 +1,5 @@
 ﻿using IC_Talent.Database;
+using IC_Talent.Database.ApiEntity.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,11 +9,11 @@ namespace IC_Talent.Server.RepositoryServices.Interface
 {
    public interface IStore
     {
-        Task<List<Store>> GetStoresAsync();
+        Task<List<GetStoreResponse>> GetStoresAsync();
 
-        Task<Store> GetStoreByIDAsync(int storeId);
-        Task<bool> CreateStoreAsync(Store store);
-        Task<bool> UpdateStoreAsync(Store storeToUpdate);
+        Task<GetStoreResponse> GetStoreByIDAsync(int storeId);
+        Task<GetStoreResponse> CreateStoreAsync(Store store);
+        Task<GetStoreResponse> UpdateStoreAsync(Store storeToUpdate);
 
         Task<bool> DeleteStoreAsync(int id);
 

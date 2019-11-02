@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IC_Talent.Server.ReporitoryServices.Interface;
+using IC_Talent.Server.RepositoryServices.Interface;
 using IC_Talent.Server.RepositoryServices.Services;
+using IC_Talent.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,9 @@ namespace IC_Talent.Server.Installers
                 .AddEntityFrameworkStores<DataContext>();
 
             services.AddScoped<ICustomer, CustomerServices>();
+            services.AddScoped<IStore, StoreServices>();
+            services.AddScoped<IProduct, ProductServices>();
+            services.AddScoped<ISales, SalesServices>();
         }
     }
 }

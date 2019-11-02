@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IC_Talent.Database.ApiEntity.Request
 {
-   public class UpdateCustomerRequest
+    public class UpdateStoreRequest
     {
         [Required]
         public int Id { get; set; }

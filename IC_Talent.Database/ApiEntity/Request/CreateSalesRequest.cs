@@ -5,15 +5,14 @@ using System.Text;
 
 namespace IC_Talent.Database.ApiEntity.Request
 {
-   public class UpdateCustomerRequest
+    public class CreateSalesRequest
     {
         [Required]
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         [Required]
-        public string Name { get; set; }
-
+        public int CustomerId { get; set; }
         [Required]
-        public string Address { get; set; }
-
+        public int StoreId { get; set; }
+        
     }
 }
