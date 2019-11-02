@@ -44,12 +44,13 @@ namespace IC_Talent.Server.Controllers
         {
             if (ModelState.IsValid)
             {
+                var datetime = new DateTime();
                 Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,
                     CustomerId = postSale.CustomerId,
-                    DateSold = new DateTime()
+                    DateSold = datetime.Date
                    
                 };
                 var created = await _salesServices.CreateSalesAsync(sale);
@@ -75,7 +76,7 @@ namespace IC_Talent.Server.Controllers
                         ProductId = updateToSale.ProductId,
                         StoreId = updateToSale.StoreId,
                         CustomerId = updateToSale.CustomerId,
-                        DateSold = new DateTime()
+                        DateSold = updateToSale.DateSold
                         };
                     var updated = await _salesServices.UpdateSalesAsync(sale);
 
