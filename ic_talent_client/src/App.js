@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Link, Switch, Route } from 'react-router-dom'
+import Customer from './components/customer';
 
-function App() {
+const NavMenuLink = () => {
+  return (<div className="ui menu">
+    <div className="header item">
+      REACT PROJECT
+      </div>
+    <Link to={"/customers"} className='item'>Customers</Link>
+    <Link to={"/store"} className='item'>Store</Link>
+    <Link to={"/product"} className='item'>Product</Link>
+    <Link to={"/sale"} className='item'>Sale</Link>
+  </div>
+  )
+}
+const NavConfig = () => {
+  return (<div className="container">
+    <Switch>
+      {/* <Route exact path='/' component={} /> */}
+      <Route exact path='/customers' component={Customer} />
+      {/* <Route path='/product' component={} /> */}
+      {/* <Route path='/store' component={} /> */}
+      {/* <Route path='/sale' component={} /> */}
+
+    </Switch>
+  </div>)
+}
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavMenuLink />
+      <NavConfig />
+
     </div>
   );
 }
+
+
+
 
 export default App;

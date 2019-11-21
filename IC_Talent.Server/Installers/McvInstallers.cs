@@ -15,7 +15,7 @@ namespace IC_Talent.Server.Installers
             services.AddControllers();
             services.AddCors(p => p.AddPolicy("Policy", builder =>
             {
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 
             }));
 

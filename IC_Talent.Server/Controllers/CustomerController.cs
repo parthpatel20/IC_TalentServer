@@ -7,6 +7,7 @@ using IC_Talent.Database.ApiEntity.Request;
 using IC_Talent.Database.APIEntity.Request;
 using IC_Talent.Server.Helpers;
 using IC_Talent.Server.ReporitoryServices.Interface;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace IC_Talent.Server.Controllers
 {
     [ApiController]
+    [EnableCors("Policy")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomer _customerServices;
@@ -55,7 +57,8 @@ namespace IC_Talent.Server.Controllers
                 };
                 var created = await _customerServices.CreateCustomerAsync(customer);
 
-                if (created != null) return Ok(created);
+
+                if (created != null) return Ok(await _customerServices.GetCustomersAsync() );
 
                 return NotFound("Data Not Created");
             }
@@ -78,7 +81,7 @@ namespace IC_Talent.Server.Controllers
                     };
                     var updated = await _customerServices.UpdateCustomerAsync(customer);
 
-                    if (updated != null) return Ok(updated);
+                    if (updated != null) return Ok(await _customerServices.GetCustomersAsync());
                     return NotFound("Data Not Updated");
                 }
                 return ValidationProblem("route and data id need to be same");
@@ -90,9 +93,8 @@ namespace IC_Talent.Server.Controllers
         public async Task<IActionResult> Delete([FromRoute] int customerId)
         {
             var deleted =await  _customerServices.DeleteCustomerAsync(customerId);
-            if (deleted) return Ok();
-
-            return Ok();      
+            if (deleted) return Ok(await _customerServices.GetCustomersAsync());
+            return NotFound("Data Not Deleted");
         } 
     }
 }

@@ -51,7 +51,7 @@ namespace IC_Talent.Server.Controllers
                 };
                 var created = await _storeServices.CreateStoreAsync(store);
 
-                if (created != null) return Ok(created);
+                if (created != null) return Ok(await _storeServices.GetStoresAsync());
 
                 return NotFound("Data Not Created");
             }
@@ -74,7 +74,7 @@ namespace IC_Talent.Server.Controllers
                     };
                     var updated = await _storeServices.UpdateStoreAsync(store);
 
-                    if (updated != null) return Ok(updated);
+                    if (updated != null) return Ok(await _storeServices.GetStoresAsync());
                     return NotFound("Data Not Updated");
                 }
                 return ValidationProblem("route and data id need to be same");
@@ -87,7 +87,7 @@ namespace IC_Talent.Server.Controllers
         public async Task<IActionResult> Delete([FromRoute] int storeId)
         {
             var deleted = await _storeServices.DeleteStoreAsync(storeId);
-            if (deleted) return Ok();
+            if (deleted) return Ok(await _storeServices.GetStoresAsync());
 
             return Ok();
         }

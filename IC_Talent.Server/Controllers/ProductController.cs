@@ -52,7 +52,7 @@ namespace IC_Talent.Server.Controllers
                 };
                 var created = await _productrServices.CreateProductAsync(product);
 
-                if (created != null) return Ok(created);
+                if (created != null) return Ok(await _productrServices.GetProductsAsync());
 
                 return NotFound("Data Not Created");
             }
@@ -75,7 +75,7 @@ namespace IC_Talent.Server.Controllers
                     };
                     var updated = await _productrServices.UpdateProductAsync(product);
 
-                    if (updated != null) return Ok(updated);
+                    if (updated != null) return Ok(await _productrServices.GetProductsAsync());
 
                     return NotFound("Data Not Updated");
                 }
@@ -88,7 +88,7 @@ namespace IC_Talent.Server.Controllers
         public async Task<IActionResult> Delete([FromRoute] int productId)
         {
             var deleted = await _productrServices.DeleteProductAsync(productId);
-            if (deleted) return Ok();
+            if (deleted) return Ok(await _productrServices.GetProductsAsync());
 
             return Ok();
         }
