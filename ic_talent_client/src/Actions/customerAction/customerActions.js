@@ -6,11 +6,14 @@ const checkEnviroment = () => {
     return (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
         ? ApiRequest.DEV_ROOT : ApiRequest.PRODUCTION_ROOT;
 }
-
+//get Customer
 export const fetchCustomers = () => {
     return (dispatch) => {
         dispatch({
             type: CustomerActionList.GET_CUSTOMERS
+        });
+        dispatch({
+            type: CustomerActionList.PAGING_SET
         })
         axios.get(checkEnviroment() + ApiRequest.API_GET_CUSTOMERS).then((response) => {
             dispatch({
@@ -60,10 +63,13 @@ export const fetchCustomer = (customerId) => {
         })
     }
 }
+
 export const editCustomer = (customer) => {
     let updateRequestForCustomer = checkEnviroment() + ApiRequest.API_GET_CUSTOMER_DETAIL.replace("{customerId}", customer.id)
-    console.log(updateRequestForCustomer)
     return (dispatch) => {
+        dispatch({
+            type: CustomerActionList.UPDATE_CUSTOMER
+        })
         axios.put(updateRequestForCustomer, { id: customer.id, name: customer.name, address: customer.address }).then((response) => {
             dispatch({
                 type: CustomerActionList.UPDATE_CUSTOMER_SUCCESS, payload: response.data
@@ -99,10 +105,11 @@ export const deleteCustomer = (customerId) => {
         });
     }
 }
+
 export const deleteRequestCancel = () => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.DELETE_CUSTOMER_CANCEL, payload: false
+            type: CustomerActionList.DELETE_CUSTOMER_CANCEL
         })
     }
 }
@@ -143,7 +150,7 @@ export const dataSortByName = (filterVal) => {
         customers: customers
     }
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.ORDERBY_NAME, payload: payload })
+        dispatch({ type: CustomerActionList.CUSTOMER_ORDERBY_NAME, payload: payload })
     }
 }
 
@@ -157,7 +164,7 @@ export const dataSortByAddress = (filterVal) => {
         customers: customers
     }
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.ORDERBY_ADDRESS, payload: payload })
+        dispatch({ type: CustomerActionList.CUSTOMER_ORDERBY_ADDRESS, payload: payload })
     }
 }
 

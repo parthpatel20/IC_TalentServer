@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postCustomer, editCustomer, fetchCustomer } from '../../Actions/customerAction/customerActions'
-import { Button, Label, Input, Form, Message } from 'semantic-ui-react';
+import { Button, Label, Input, Form, Message, Container } from 'semantic-ui-react';
+import { postStore, editStore } from '../../Actions/storeAction/storeActions'
 
-class addUpdateCustmer extends Component {
-
+class AddUpdateStore extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: props.customer ? props.customer.id : 0,
-            name: props.customer ? props.customer.name : '',
-            address: props.customer ? props.customer.address : '',
+            id: props.store ? props.store.id : 0,
+            name: props.store ? props.store.name : '',
+            address: props.store ? props.store.address : '',
             isEditMode: false,
             errors: {}
         }
@@ -23,28 +22,28 @@ class addUpdateCustmer extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let errors = {};
-        if (this.state.name === '') errors.name = <Message color='red' content="Name is required"></Message>;
-        if (this.state.address === '') errors.address = <Message color='red' content="Address is required"></Message>;
+        if (typeof this.state.name === 'undefined') errors.name = <Message color='red' content="Name is required"></Message>;
+        if (typeof this.state.address === 'undefined') errors.address = <Message color='red' content="Address is required"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {
             if (this.props.isEditMode === true) {
-                const customer = {
+                const store = {
                     id: this.state.id,
                     name: this.state.name,
                     address: this.state.address
                 }
-                this.props.editCustomer(customer)
+                this.props.editStore(store)
                 if (this.props.loading === false) {
                     this.clearField();
                 }
             }
             else {
-                const customer = {
+                const store = {
                     name: this.state.name,
                     address: this.state.address
                 }
-                this.props.postCustomer(customer);
+                this.props.postStore(store);
                 if (this.props.loading === false) {
                     this.setState({ name: '', address: '' })
                 }
@@ -54,15 +53,14 @@ class addUpdateCustmer extends Component {
 
     clearField = () => {
         this.setState({
-            id: '',
+            id: this.state.id || 0,
             name: '',
             address: '',
-            isEditMode: false,
+            isEditMode: (this.state.id === 0) ? false : true,
             errors: {}
         })
     }
     submitForm = () => {
-
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
             <Form.Field inline  >
                 <Label>Name</Label>
@@ -75,38 +73,38 @@ class addUpdateCustmer extends Component {
                 <span>{this.state.errors.address}</span>
             </Form.Field>
             {(this.props.isInsertMode) ?
-                <Button content='SAVE' type='submit' color='green' icon='check' labelPosition='right' /> : <Button content='EDIT' color='green' icon='check' labelPosition='right' type='submit' />}
+                <Button content='SAVE' type='submit' color='green' icon='check' labelPosition='right' /> :
+                <Button content='EDIT' color='green' icon='check' labelPosition='right' type='submit' />}
             <Button type='button' content='Clear' color='black' onClick={this.clearField} />
         </Form>);
     }
-
     render() {
         return (
-            <div>
-
+            <Container>
                 {this.submitForm()}
-            </div>
+            </Container>
         );
     }
 }
 
 const mapStateToProps = (state) => {
+    console.log('ADDUPDATESTORE', state)
     return {
-        customer: state.customerReducer.customer,
-        customerIdforEdit: state.customerReducer.customerIdforEdit,
-        openModal: state.customerReducer.openModal,
-        closeModal: state.customerReducer.closeModal,
-        loading: state.customerReducer.loading,
-        isEditMode: state.customerReducer.isEditMode,
-        isInsertMode: state.customerReducer.isInsertMode,
-    }
-}
+        store: state.storeReducer.store,
+        storeIdforEdit: state.storeReducer.storeIdforEdit,
+        openModal: state.storeReducer.openModal,
+        closeModal: state.storeReducer.closeModal,
+        loading: state.storeReducer.loading,
+        isEditMode: state.storeReducer.isEditMode,
+        isInsertMode: state.storeReducer.isInsertMode,
 
+    };
+}
 const mapDispatchToProps = (dispatch) => {
     return {
-        postCustomer: (customer) => dispatch(postCustomer(customer)),
-        editCustomer: (customer) => dispatch(editCustomer(customer)),
-        fetchCustomer: (customerIdforEdit) => dispatch(fetchCustomer(customerIdforEdit)),
+        postStore: (store) => dispatch(postStore(store)),
+        editStore: (store) => dispatch(editStore(store))
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(addUpdateCustmer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUpdateStore);

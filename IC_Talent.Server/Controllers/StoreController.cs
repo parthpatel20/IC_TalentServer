@@ -6,12 +6,14 @@ using IC_Talent.Database;
 using IC_Talent.Database.ApiEntity.Request;
 using IC_Talent.Server.Helpers;
 using IC_Talent.Server.RepositoryServices.Interface;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IC_Talent.Server.Controllers
 {
     [ApiController]
+    [EnableCors("Policy")]
     public class StoreController : ControllerBase
     {
         private readonly IStore _storeServices;

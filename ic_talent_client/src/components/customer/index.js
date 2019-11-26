@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCustomers, fetchCustomer, closeModal, openModal, deleteCustomerRequest, dataSortByAddress, dataSortByName, deleteCustomer, deleteRequestCancel, pageChanged, dataPerPage } from '../../Actions/customerAction/customerActions'
 import AddUpdateCustmer from './addUpdateCustmer'
-import { Button, Dimmer, Loader, Icon, Confirm, Modal, Dropdown, Pagination } from 'semantic-ui-react';
+import { Button, Loader, Icon, Confirm, Modal, Dropdown, Pagination, Container } from 'semantic-ui-react';
 
 class Customer extends Component {
 
     componentDidMount() {
         this.props.fetchCustomers();
-        console.log(this.props)
     }
     deleteCustomerfromList = (customerId) => {
         this.props.deleteCustomerRequest(customerId)
@@ -29,7 +28,7 @@ class Customer extends Component {
             onConfirm={this.handleConfirm} />);
     }
     openInsertUpdateModal = () => {
-        return (<Button color='blue' onClick={() => { this.props.openModal() }}>Add</Button>);
+        return (<Button color='blue' floated='left' icon='add' labelPosition='left' content='CUSTOMER' onClick={() => { this.props.openModal() }} />);
     }
     onCloseModal = () => {
         this.props.closeModal();
@@ -45,7 +44,7 @@ class Customer extends Component {
         </Modal>)
     }
 
-    dropDown = () => {
+    pageSizedropDown = () => {
         let option = [{
             key: '5',
             text: '5',
@@ -66,8 +65,8 @@ class Customer extends Component {
     }
 
     dropdownHandleChange = (e, data) => {
-        console.log(data.value);
-        const lItem = this.props.currerntPage * parseInt(data.value);
+
+        const lItem = this.props.currentPage * parseInt(data.value);
         const fItem = lItem - parseInt(data.value);
         const pageSizeChangedProps = {
             firstItemOfThePage: fItem,
@@ -76,14 +75,16 @@ class Customer extends Component {
         }
         this.props.dataPerPage(pageSizeChangedProps);
     }
+
     pageChange = (event, data) => {
-        const currerntPage = data.activePage;
-        const lItem = currerntPage * this.props.customerPerPage;
+
+        const currentPage = data.activePage;
+        const lItem = currentPage * this.props.customerPerPage;
         const fItem = lItem - this.props.customerPerPage;
         const pageChangedProps = {
             firstItemOfThePage: fItem,
             lastItemOfthePage: lItem,
-            currerntPage: currerntPage
+            currentPage: currentPage
         }
         this.props.pageChanged(pageChangedProps);
     }
@@ -96,7 +97,7 @@ class Customer extends Component {
             firstItem={null}
             lastItem={null}
             siblingRange={1}
-            activePage={this.props.currerntPage}
+            activePage={this.props.currentPage}
             onPageChange={this.pageChange}
         />
         );
@@ -131,11 +132,11 @@ class Customer extends Component {
         );
     }
     customerList = () => {
-        console.log('ping', this.props)
+
         if (this.props.fetching) return <div>
             <Loader size="medium" active inline='centered'>Loading</Loader>
         </div>
-        if (this.props.apiError) return <h1>{this.props.apiError}</h1>
+        if (this.props.apiError && this.props.customers.length === 0) return <h1>{this.props.apiError}</h1>
         if (this.props.fetched) {
             if (this.props.customers === undefined || this.props.customers.length === 0) return <h1>There are no such data</h1>
             return (<div>
@@ -155,7 +156,7 @@ class Customer extends Component {
                     <tfoot>
                         <tr>
                             <td>
-                                {this.dropDown()}
+                                {this.pageSizedropDown()}
                             </td>
                             <td></td>
                             <td></td>
@@ -168,16 +169,19 @@ class Customer extends Component {
     }
     render() {
         return (
-            <div>
-                <div>{this.addUpdateModal()}</div>
-                <div>{this.customerList()}</div>
-                <div>{this.deleteConfirm()}</div>
-            </div>)
+            <Container>
+                <div className=' ui grid'>
+                    <div className='row'>{this.addUpdateModal()}</div>
+                    <div className='row'>{this.customerList()}</div>
+                    <div className='row'>{this.deleteConfirm()}</div>
+                </div>
+            </Container>
+        )
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    console.log('CSR', state)
     return {
         customers: state.customerReducer.customers,
         fetching: state.customerReducer.fetching,
@@ -190,7 +194,7 @@ const mapStateToProps = (state) => {
         firstItemOfThePage: state.customerReducer.firstItemOfThePage,
         lastItemOfthePage: state.customerReducer.lastItemOfthePage,
         customerPerPage: state.customerReducer.customerPerPage,
-        currerntPage: state.customerReducer.currerntPage,
+        currentPage: state.customerReducer.currentPage,
         orderByNameAEC: state.customerReducer.orderByNameAEC,
         orderByAddressAEC: state.customerReducer.orderByAddressAEC,
         isInsertMode: state.customerReducer.isInsertMode,

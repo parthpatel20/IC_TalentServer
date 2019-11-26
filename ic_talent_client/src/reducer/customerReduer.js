@@ -14,11 +14,11 @@ const initialState = {
     insertUpdateModal: false,
     deleteModal: false,
     customerPerPage: 10,
-    currerntPage: 1,
+    currentPage: 1,
     firstItemOfThePage: 0,
     lastItemOfthePage: 10,
     orderByNameAEC: false,
-    orderByAddressAEC: false,
+    orderByAddressAEC: false
 }
 
 const CustomerReducer = (state, action) => {
@@ -31,10 +31,8 @@ const CustomerReducer = (state, action) => {
             return { ...state, fetching: false, fetched: true, customers: action.payload, customerSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage) }
         case CustomerActionList.GET_CUSTOMERS_REJECTED:
             return { ...state, fetching: false, apiError: action.payload }
-
         case CustomerActionList.GET_CUSTOMER_DETAIL:
             return { ...state, customer: [], customerIdforEdit: action.payload, isEditMode: true, insertUpdateModal: true, isInsertMode: false }
-
         case CustomerActionList.GET_CUSTOMER_DETAIL_FULFILLED:
             return { ...state, customer: action.payload, isEditMode: true, customerIdforEdit: action.payload.id, insertUpdateModal: true, isInsertMode: false }
         case CustomerActionList.POST_CUSTOMER:
@@ -73,17 +71,19 @@ const CustomerReducer = (state, action) => {
             }
         case CustomerActionList.PAGING_SET:
             return {
-                ...state, customerSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage)
+                ...state, firstItemOfThePage: 0,
+                lastItemOfthePage: 10,
+                currentPage: 1
             }
         case CustomerActionList.PAGE_CHANGED: return {
             ...state, customerSlice: state.customers.slice(action.payload.firstItemOfThePage, action.payload.lastItemOfthePage), firstItemOfThePage: action.payload.firstItemOfThePage,
             lastItemOfthePage: action.payload.lastItemOfthePage,
-            currerntPage: action.payload.currerntPage
+            currentPage: action.payload.currentPage
         }
         case CustomerActionList.PAGESIZE_DATA_CHANGED:
             return {
                 ...state, customerPerPage: action.payload.customerPerPage, customerSlice: state.customers.slice(action.payload.firstItemOfThePage, action.payload.lastItemOfthePage), firstItemOfThePage: action.payload.firstItemOfThePage,
-                lastItemOfthePage: action.payload.lastItemOfthePage
+                lastItemOfthePage: action.payload.lastItemOfthePage, currentPage: 1
             }
         case CustomerActionList.OPEN_MODAL:
             return {
@@ -93,12 +93,12 @@ const CustomerReducer = (state, action) => {
             return {
                 ...state, isInsertMode: false, customer: [], isEditMode: false, insertUpdateModal: false,
             }
-        case CustomerActionList.ORDERBY_NAME:
+        case CustomerActionList.CUSTOMER_ORDERBY_NAME:
             return {
                 ...state, customers: action.payload.customers, orderByNameAEC: action.payload.orderByNameAEC,
                 customerSlice: action.payload.customers.slice(state.firstItemOfThePage, state.lastItemOfthePage)
             }
-        case CustomerActionList.ORDERBY_ADDRESS:
+        case CustomerActionList.CUSTOMER_ORDERBY_ADDRESS:
             return {
                 ...state, customers: action.payload.customers, orderByAddressAEC: action.payload.orderByAddressAEC,
                 customerSlice: action.payload.customers.slice(state.firstItemOfThePage, state.lastItemOfthePage)
