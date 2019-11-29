@@ -15,7 +15,7 @@ namespace IC_Talent.Database
 
         [Required]
         public string Address { get; set; }
-
-        public ICollection<Sales> Sales { get; set; }
+        
+        public  ICollection<Sales> Sales { get; set; }
     }
 }

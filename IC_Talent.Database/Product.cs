@@ -15,7 +15,8 @@ namespace IC_Talent.Database
         public string Name { get; set; }
         [Required]
         public decimal Price { get; set; }
-        public ICollection<Sales> Sales { get; set; }
+      
+        public  ICollection<Sales> Sales { get; set; }
 
     }
 }

@@ -6,6 +6,7 @@ import { deleteRequestCancel, openModal, closeModal } from '../../Actions/helper
 import Pages from '../helper/pagination';
 import AddUpdateStore from './addUpdateStore';
 class Store extends Component {
+
     componentDidMount() {
         this.props.fetchStores();
     }
@@ -54,7 +55,7 @@ class Store extends Component {
         if (this.props.apiError && this.props.stores.length === 0) return <h1>{this.props.apiError}</h1>
         if (this.props.fetched) {
             if (this.props.stores === undefined || this.props.stores.length === 0) return <h1>There are no such data</h1>
-            return (<div>
+            return (<div className='ui container'>
 
                 <table className="ui table">
                     <thead className="ui table header"  >
@@ -168,5 +169,5 @@ const mapDispatchToProps = (dispatch) => {
         openModal: () => dispatch(openModal()),
         closeModal: () => dispatch(closeModal())
     };
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Store)

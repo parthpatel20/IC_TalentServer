@@ -9,7 +9,7 @@ namespace IC_Talent.Server.Helpers
     {
         public const string Root = "api";
         public const string RootForCustomerModification = Root + "/customer/{customerId}";
-        public const string RootForProductModification = Root + "/products/{productId}";
+        public const string RootForProductModification = Root + "/product/{productId}";
         public const string RootForStoreModification = Root + "/store/{storeId}";
         public const string RootForSalesModification = Root + "/Sale/{saleId}";
 

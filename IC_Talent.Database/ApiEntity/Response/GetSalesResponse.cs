@@ -8,10 +8,14 @@ namespace IC_Talent.Database.ApiEntity.Response
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
 
         public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
 
         public int StoreId { get; set; }
+        public string StoreName { get; set; }
+
 
         public DateTime DateSold { get; set; }
     }

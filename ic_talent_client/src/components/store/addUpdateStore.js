@@ -18,12 +18,15 @@ class AddUpdateStore extends Component {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value })
     }
-
+    
+    isEmpty = (val)=>{
+        return(typeof val === 'undefined'|| val.length===0||val===""|| !val)
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         let errors = {};
-        if (typeof this.state.name === 'undefined') errors.name = <Message color='red' content="Name is required"></Message>;
-        if (typeof this.state.address === 'undefined') errors.address = <Message color='red' content="Address is required"></Message>;
+        if (this.isEmpty(this.state.name)) errors.name = <Message color='red' content="Name is required"></Message>;
+        if (this.isEmpty(this.state.address)) errors.address = <Message color='red' content="Address is required"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
         if (isValid) {

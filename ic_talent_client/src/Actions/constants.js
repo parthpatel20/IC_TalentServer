@@ -9,6 +9,9 @@ export const API_POST_CUSTOMER = "/customer";
 export const API_GET_CUSTOMER_DETAIL = '/customer/{customerId}';
 
 //Product
+export const API_GET_PRODUCTS = "/products";
+export const API_POST_PRODUCT = "/product";
+export const API_GET_PRODUCT_DETAIL = '/product/{productId}';
 
 //Store
 export const API_GET_STORES = "/stores";
@@ -17,7 +20,9 @@ export const API_GET_STORE_DETAIL = '/store/{storeId}';
 
 
 //Sale
-
+export const API_GET_SALES = "/sales";
+export const API_POST_SALE = "/sale";
+export const API_GET_SALE_DETAIL = '/store/{saleId}';
 
 //Impo
 //MODAL METHOD

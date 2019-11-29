@@ -139,7 +139,7 @@ class Customer extends Component {
         if (this.props.apiError && this.props.customers.length === 0) return <h1>{this.props.apiError}</h1>
         if (this.props.fetched) {
             if (this.props.customers === undefined || this.props.customers.length === 0) return <h1>There are no such data</h1>
-            return (<div>
+            return (<div className='ui container'>
 
                 <table className="ui table">
                     <thead className="ui table header"  >

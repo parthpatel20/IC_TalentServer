@@ -49,3 +49,9 @@ export const sortByAddress = (x, y) => {
     let v2 = y.address.toUpperCase();
     return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
 }
+
+export const sortByPrice = (x, y) => {
+    let v1 = x.price
+    let v2 = y.price
+    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
+}
