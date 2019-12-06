@@ -4,6 +4,7 @@ import { Link, Switch, Route } from 'react-router-dom'
 import Customer from './components/customer';
 import Store from './components/store';
 import Product from './components/product';
+import Sale from './components/sale'
 
 const NavMenuLink = () => {
   return (<div className="ui menu">
@@ -24,7 +25,7 @@ const NavConfig = () => {
       <Route exact path='/customers' component={Customer} />
       <Route path='/product' component={Product} />
       <Route path='/store' component={Store} />
-      {/* <Route path='/sale' component={} /> */}
+      <Route path='/sale' component={Sale} />
 
     </Switch>
   </div>)

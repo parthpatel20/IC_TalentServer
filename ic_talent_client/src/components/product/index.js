@@ -20,7 +20,7 @@ class Product extends Component {
     }
     deleteConfirm = () => {
         return (<Confirm open={this.props.deleteModal} size='mini'
-            header='DELETE STORE '
+            header='DELETE PRODUCT'
             onCancel={this.handleCancel}
             cancelButton='Cancel'
             confirmButton="Delete"
@@ -48,7 +48,7 @@ class Product extends Component {
             orderType: !this.props.orderByPriceAEC,
             pageSize: this.props.pageSize
         }
-        
+
         this.props.dataSortByPrice(filterVal)
     }
 
@@ -149,7 +149,7 @@ const mapStateToProps = (state) => {
         deleteModal: state.productReducer.deleteModal,
         deleteProductId: state.productReducer.productIdforDelete
     };
-} 
+}
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchProducts: () => dispatch(fetchProducts()),

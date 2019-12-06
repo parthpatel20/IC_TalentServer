@@ -55,3 +55,7 @@ export const sortByPrice = (x, y) => {
     let v2 = y.price
     return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
 }
+
+export const sortBy = (x, y) => {
+    return ((x === y) ? 0 : ((x > y) ? 1 : -1));
+}

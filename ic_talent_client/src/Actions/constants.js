@@ -22,7 +22,7 @@ export const API_GET_STORE_DETAIL = '/store/{storeId}';
 //Sale
 export const API_GET_SALES = "/sales";
 export const API_POST_SALE = "/sale";
-export const API_GET_SALE_DETAIL = '/store/{saleId}';
+export const API_GET_SALE_DETAIL = '/sale/{saleId}';
 
 //Impo
 //MODAL METHOD
@@ -39,5 +39,5 @@ export const PAGESIZE_DATA_CHANGED = "PAGESIZE_DATA_CHANGED";
 export const ORDERBY_NAME = "ORDERBY_NAME";
 export const ORDERBY_ADDRESS = "ORDERBY_ADDRESS";
 
-//delete
+//Delete
 export const DELETE_REQUEST_CANCEL = "DELETE_REQUEST_CANCEL";

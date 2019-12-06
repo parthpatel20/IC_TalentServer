@@ -18,9 +18,9 @@ class AddUpdateStore extends Component {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value })
     }
-    
-    isEmpty = (val)=>{
-        return(typeof val === 'undefined'|| val.length===0||val===""|| !val)
+
+    isEmpty = (val) => {
+        return (typeof val === 'undefined' || val.length === 0 || val === "" || !val)
     }
     handleSubmit = (e) => {
         e.preventDefault();

@@ -1,4 +1,3 @@
-
 import * as StoreActions from '../../src/Actions/storeAction/index'
 import * as SupportiveActions from '../Actions/constants';
 const initialState = {

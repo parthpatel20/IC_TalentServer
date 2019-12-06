@@ -1,24 +1,24 @@
 import axios from 'axios';
 import { checkEnviroment, sortByName, sortByAddress } from '../helpers';
-import * as StoreActionList from './index';
+import * as StoreActions from './index';
 import * as ApiRequest from '../constants';
 
 //get Stores
 export const fetchStores = () => {
     return (dispatch) => {
         dispatch({
-            type: StoreActionList.GET_STORES
+            type: StoreActions.GET_STORES
         });
         dispatch({
             type: ApiRequest.PAGING_SET
         })
         axios.get(checkEnviroment() + ApiRequest.API_GET_STORES).then((response) => {
             dispatch({
-                type: StoreActionList.GET_STORES_FULFILLED, payload: response.data
+                type: StoreActions.GET_STORES_FULFILLED, payload: response.data
             });
         }).catch((err) => {
             dispatch({
-                type: StoreActionList.GET_STORES_REJECTED, payload: err.message
+                type: StoreActions.GET_STORES_REJECTED, payload: err.message
             })
         })
     }
@@ -28,16 +28,16 @@ export const fetchStores = () => {
 export const postStore = (store) => {
     return (dispatch) => {
         dispatch({
-            type: StoreActionList.POST_STORE, payload: store
+            type: StoreActions.POST_STORE, payload: store
         })
         axios.post(checkEnviroment() + ApiRequest.API_POST_STORE, { name: store.name, address: store.address },
         ).then(res => {
             dispatch({
-                type: StoreActionList.POST_STORE_SUCCESS, payload: res.data
+                type: StoreActions.POST_STORE_SUCCESS, payload: res.data
             });
         }).catch(err => {
             dispatch({
-                type: StoreActionList.POST_STORE_ERROR, payload: err.message
+                type: StoreActions.POST_STORE_ERROR, payload: err.message
             });
         });
     }
@@ -55,7 +55,7 @@ export const dataSortByName = (filterVal) => {
         pageSize: filterVal.pageSize
     }
     return (dispatch) => {
-        dispatch({ type: StoreActionList.STORE_ORDERBY_NAME, payload: payload })
+        dispatch({ type: StoreActions.STORE_ORDERBY_NAME, payload: payload })
     }
 }
 
@@ -70,13 +70,13 @@ export const dataSortByAddress = (filterVal) => {
         pageSize: filterVal.pageSize
     }
     return (dispatch) => {
-        dispatch({ type: StoreActionList.STORE_ORDERBY_ADDRESS, payload: payload })
+        dispatch({ type: StoreActions.STORE_ORDERBY_ADDRESS, payload: payload })
     }
 }
 export const deleteStoreRequest = (storeId) => {
     return (dispatch) => {
         dispatch({
-            type: StoreActionList.DELETE_STORE, payload: storeId
+            type: StoreActions.DELETE_STORE, payload: storeId
         })
     }
 }
@@ -87,11 +87,11 @@ export const deleteStore = (storeId) => {
     return (dispatch) => {
         axios.delete(deleteRequestForCustomer).then((response) => {
             dispatch({
-                type: StoreActionList.DELETE_STORE_SUCCESS, payload: response.data
+                type: StoreActions.DELETE_STORE_SUCCESS, payload: response.data
             });
         }).catch((error) => {
             dispatch({
-                type: StoreActionList.DELETE_STORE_ERROR, payload: error
+                type: StoreActions.DELETE_STORE_ERROR, payload: error
             })
         });
     }
@@ -106,11 +106,11 @@ export const fetchStore = (storeId) => {
 
         axios.get(req).then((response) => {
             dispatch({
-                type: StoreActionList.GET_STORE_DETAIL_FULFILLED, payload: response.data
+                type: StoreActions.GET_STORE_DETAIL_FULFILLED, payload: response.data
             })
         }).catch((err) => {
             dispatch({
-                type: StoreActionList.GET_STORE_DETAIL_REJECTED, payload: err
+                type: StoreActions.GET_STORE_DETAIL_REJECTED, payload: err
             })
         })
     }
@@ -120,16 +120,16 @@ export const editStore = (store) => {
     let updateRequestForCustomer = checkEnviroment() + ApiRequest.API_GET_STORE_DETAIL.replace("{storeId}", store.id)
     return (dispatch) => {
         dispatch({
-            type: StoreActionList.UPDATE_STORE
+            type: StoreActions.UPDATE_STORE
         });
 
         axios.put(updateRequestForCustomer, { id: store.id, name: store.name, address: store.address }).then((response) => {
             dispatch({
-                type: StoreActionList.UPDATE_STORE_SUCCESS, payload: response.data
+                type: StoreActions.UPDATE_STORE_SUCCESS, payload: response.data
             })
         }).catch((error) => {
             dispatch({
-                type: StoreActionList.UPDATE_STORE_ERROR, payload: error
+                type: StoreActions.UPDATE_STORE_ERROR, payload: error
             })
         });
     }

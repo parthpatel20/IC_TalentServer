@@ -6,12 +6,14 @@ using IC_Talent.Database;
 using IC_Talent.Database.ApiEntity.Request;
 using IC_Talent.Server.Helpers;
 using IC_Talent.Server.RepositoryServices.Interface;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IC_Talent.Server.Controllers
 {
     [ApiController]
+    [EnableCors("Policy")]
     public class SalesController : ControllerBase
     {
         private readonly ISales _salesServices;
@@ -44,18 +46,17 @@ namespace IC_Talent.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                var datetime = new DateTime();
                 Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,
                     CustomerId = postSale.CustomerId,
-                    DateSold = datetime.Date
+                    DateSold = postSale.DateSold
                    
                 };
                 var created = await _salesServices.CreateSalesAsync(sale);
 
-                if (created != null) return Ok(created);
+                if (created != null) return Ok(await _salesServices.GetSalesAsync());
 
                 return NotFound("Data Not Created");
             }
@@ -80,7 +81,7 @@ namespace IC_Talent.Server.Controllers
                         };
                     var updated = await _salesServices.UpdateSalesAsync(sale);
 
-                    if (updated != null) return Ok(updated);
+                    if (updated != null) return Ok(await _salesServices.GetSalesAsync());
                     return NotFound("Data Not Updated");
                 }
                 return ValidationProblem("route and data id need to be same");
@@ -93,9 +94,9 @@ namespace IC_Talent.Server.Controllers
         public async Task<IActionResult> Delete([FromRoute] int saleId)
         {
             var deleted = await _salesServices.DeleteSalesAsync(saleId);
-            if (deleted) return Ok();
+            if (deleted) return Ok(await _salesServices.GetSalesAsync());
 
-            return Ok();
+            return NotFound();
         }
         
     }
