@@ -16,11 +16,9 @@ namespace IC_Talent.Database
         public int ProductId { get; set; }
         public  Product Product { get; set; }
         [Required]
-        
         public int CustomerId { get; set; }
         public  Customer Customer { get; set; }
         [Required]
-        
         public int StoreId { get; set; }
         public  Store Store { get; set; }
         [Required]

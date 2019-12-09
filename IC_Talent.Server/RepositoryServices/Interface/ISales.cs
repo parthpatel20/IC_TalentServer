@@ -1,4 +1,5 @@
 ﻿using IC_Talent.Database;
+using IC_Talent.Database.ApiEntity.Request;
 using IC_Talent.Database.ApiEntity.Response;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,9 @@ namespace IC_Talent.Server.RepositoryServices.Interface
         Task<List<GetSalesResponse>> GetSalesAsync();
 
         Task<GetSalesResponse> GetSalesByIDAsync(int saleId);
-        Task<GetSalesResponse> CreateSalesAsync(Sales postSale);
+        Task<bool> CreateSalesAsync(Sales postSale);
 
-        Task<GetSalesResponse> UpdateSalesAsync(Sales saleToUpdate);
+        Task<bool> UpdateSalesAsync(UpdateSalesRequest saleToUpdate);
         Task<bool> DeleteSalesAsync(int saleId);
 
     }

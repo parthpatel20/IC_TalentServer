@@ -14,8 +14,5 @@ namespace IC_Talent.Database.ApiEntity.Request
         [Required]
         public int CustomerId { get; set; }
         [Required]
-        public int StoreId { get; set; }
-        [Required]
-        public DateTime DateSold { get; set; }
-    }
+        public int StoreId { get; set; }}
 }

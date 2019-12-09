@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { checkEnviroment, sortByName, sortByPrice } from '../helpers';
+import { checkEnviroment, sortBy } from '../helpers';
 import * as ProductActions from './index';
 import * as ApiRequest from '../constants';
 export const fetchProducts = () => {
@@ -21,7 +21,7 @@ export const fetchProducts = () => {
         })
     }
 }
-//post Customer
+
 export const postProduct = (product) => {
     return (dispatch) => {
         
@@ -42,13 +42,14 @@ export const postProduct = (product) => {
 }
 
 export const dataSortByName = (filterVal) => {
-    var products = filterVal.products.sort(sortByName);
-    if (filterVal.orderType === false) {
-        products = products.sort(sortByName).reverse();
-    }
+
+    var products = (filterVal.orderType === true) ?
+        filterVal.products.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase()))
+        : filterVal.products.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase())).reverse();
+
     const payload = {
-        orderByNameAEC: filterVal.orderType,
-        products: products,
+        orderByAddressAEC: filterVal.orderType,
+        customers: products,
         pageSize: filterVal.pageSize
     }
     return (dispatch) => {
@@ -57,11 +58,10 @@ export const dataSortByName = (filterVal) => {
 }
 
 export const dataSortByPrice = (filterVal) => {
-    var products = filterVal.products.sort(sortByPrice);
-    if (filterVal.orderType === false) {
-        products = products.sort(sortByPrice).reverse();
-    }
-    
+    var products = (filterVal.orderType === true) ?
+        filterVal.products.sort((a, b) => sortBy(a.price, b.price))
+        : filterVal.products.sort((a, b) => sortBy(a.price, b.price)).reverse();
+ 
     const payload = {
         orderByPriceAEC: filterVal.orderType,
         products: products,
@@ -98,12 +98,8 @@ export const deleteProduct = (productId) => {
     }
 }
 
-
 export const fetchProduct = (productId) => {
     return (dispatch) => {
-        // dispatch({
-        //     type: CustomerActionList.GET_CUSTOMER_DETAIL, payload: productId
-        // })
         let req = checkEnviroment() + ApiRequest.API_GET_PRODUCT_DETAIL.replace("{productId}", productId)
 
         axios.get(req).then((response) => {

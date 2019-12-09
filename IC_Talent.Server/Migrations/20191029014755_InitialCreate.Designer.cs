@@ -381,7 +381,7 @@ namespace IC_Talent.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-#pragma warning reCustomer 612, 618
         }
+
     }
 }

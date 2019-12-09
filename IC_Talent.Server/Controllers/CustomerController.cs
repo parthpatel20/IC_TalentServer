@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using IC_Talent.Database;
 using IC_Talent.Database.ApiEntity.Request;
@@ -19,10 +21,13 @@ namespace IC_Talent.Server.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomer _customerServices;
+        private readonly Capitalize _capitalize;
         
+
         public CustomerController(ICustomer customerServices)
         {
             _customerServices = customerServices;
+            _capitalize = new Capitalize();
 
         }
 
@@ -50,10 +55,11 @@ namespace IC_Talent.Server.Controllers
         {
             if (ModelState.IsValid)
             {
+                   
                 Customer customer = new Customer
                 {
-                    Name = postCustomer.Name,
-                    Address = postCustomer.Address
+                    Name = _capitalize.ToCapitalize(postCustomer.Name),
+                    Address = _capitalize.ToCapitalize(postCustomer.Address)
                 };
                 var created = await _customerServices.CreateCustomerAsync(customer);
 
@@ -76,8 +82,8 @@ namespace IC_Talent.Server.Controllers
                     Customer customer = new Customer
                     {
                         Id = customerId,
-                        Name = updateToCustomer.Name,
-                        Address = updateToCustomer.Address
+                        Name = _capitalize.ToCapitalize(updateToCustomer.Name),
+                        Address = _capitalize.ToCapitalize(updateToCustomer.Address)
                     };
                     var updated = await _customerServices.UpdateCustomerAsync(customer);
 
@@ -96,5 +102,6 @@ namespace IC_Talent.Server.Controllers
             if (deleted) return Ok(await _customerServices.GetCustomersAsync());
             return NotFound("Data Not Deleted");
         } 
+       
     }
 }

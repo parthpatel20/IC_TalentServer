@@ -1,42 +1,37 @@
 import axios from 'axios'
-import * as CustomerActionList from './index';
+import * as CustomerActions from './index';
 import * as ApiRequest from '../constants';
+import { checkEnviroment, sortBy } from '../helpers';
 
-const checkEnviroment = () => {
-    return (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
-        ? ApiRequest.DEV_ROOT : ApiRequest.PRODUCTION_ROOT;
-}
-//get Customer
 export const fetchCustomers = () => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.GET_CUSTOMERS
+            type: CustomerActions.GET_CUSTOMERS
         });
         dispatch({
-            type: CustomerActionList.PAGING_SET
+            type: CustomerActions.PAGING_SET
         })
         axios.get(checkEnviroment() + ApiRequest.API_GET_CUSTOMERS).then((response) => {
             dispatch({
-                type: CustomerActionList.GET_CUSTOMERS_FULFILLED, payload: response.data
+                type: CustomerActions.GET_CUSTOMERS_FULFILLED, payload: response.data
             })
         }).catch((err) => {
             dispatch({
-                type: CustomerActionList.GET_CUSTOMERS_REJECTED, payload: err.message
+                type: CustomerActions.GET_CUSTOMERS_REJECTED, payload: err.message
             })
         })
     }
 }
 
-//POST CUSTOMER
 export const postCustomer = (customer) => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.POST_CUSTOMER, payload: customer
+            type: CustomerActions.POST_CUSTOMER, payload: customer
         })
         axios.post(checkEnviroment() + ApiRequest.API_POST_CUSTOMER, { name: customer.name, address: customer.address },
         ).then(res => {
             dispatch({
-                type: CustomerActionList.POST_CUSTOMER_SUCCESS, payload: res.data
+                type: CustomerActions.POST_CUSTOMER_SUCCESS, payload: res.data
             });
         }).catch(err => {
             console.log(err);
@@ -44,21 +39,16 @@ export const postCustomer = (customer) => {
     }
 }
 
-//Fetch Customer By Id
 export const fetchCustomer = (customerId) => {
     return (dispatch) => {
-        // dispatch({
-        //     type: CustomerActionList.GET_CUSTOMER_DETAIL, payload: customerId
-        // })
         let req = checkEnviroment() + ApiRequest.API_GET_CUSTOMER_DETAIL.replace("{customerId}", customerId)
-
         axios.get(req).then((response) => {
             dispatch({
-                type: CustomerActionList.GET_CUSTOMER_DETAIL_FULFILLED, payload: response.data
+                type: CustomerActions.GET_CUSTOMER_DETAIL_FULFILLED, payload: response.data
             })
         }).catch((err) => {
             dispatch({
-                type: CustomerActionList.GET_CUSTOMER_DETAIL_REJECTED, payload: err
+                type: CustomerActions.GET_CUSTOMER_DETAIL_REJECTED, payload: err
             })
         })
     }
@@ -68,15 +58,15 @@ export const editCustomer = (customer) => {
     let updateRequestForCustomer = checkEnviroment() + ApiRequest.API_GET_CUSTOMER_DETAIL.replace("{customerId}", customer.id)
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.UPDATE_CUSTOMER
+            type: CustomerActions.UPDATE_CUSTOMER
         })
         axios.put(updateRequestForCustomer, { id: customer.id, name: customer.name, address: customer.address }).then((response) => {
             dispatch({
-                type: CustomerActionList.UPDATE_CUSTOMER_SUCCESS, payload: response.data
+                type: CustomerActions.UPDATE_CUSTOMER_SUCCESS, payload: response.data
             })
         }).catch((error) => {
             dispatch({
-                type: CustomerActionList.UPDATE_CUSTOMER_ERROR, payload: error
+                type: CustomerActions.UPDATE_CUSTOMER_ERROR, payload: error
             })
         });
     }
@@ -85,7 +75,7 @@ export const editCustomer = (customer) => {
 export const deleteCustomerRequest = (customerId) => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.DELETE_CUSTOMER, payload: customerId
+            type: CustomerActions.DELETE_CUSTOMER, payload: customerId
         })
     }
 }
@@ -95,12 +85,12 @@ export const deleteCustomer = (customerId) => {
     return (dispatch) => {
         axios.delete(deleteRequestForCustomer).then((response) => {
             dispatch({
-                type: CustomerActionList.DELETE_CUSTOMER_SUCCESS, payload: response.data
+                type: CustomerActions.DELETE_CUSTOMER_SUCCESS, payload: response.data
             });
 
         }).catch((error) => {
             dispatch({
-                type: CustomerActionList.DELETE_CUSTOMER_ERROR, payload: error
+                type: CustomerActions.DELETE_CUSTOMER_ERROR, payload: error
             })
         });
     }
@@ -109,14 +99,14 @@ export const deleteCustomer = (customerId) => {
 export const deleteRequestCancel = () => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.DELETE_CUSTOMER_CANCEL
+            type: CustomerActions.DELETE_CUSTOMER_CANCEL
         })
     }
 }
 export const pageChanged = (pageChangedProps) => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.PAGE_CHANGED, payload: pageChangedProps
+            type: CustomerActions.PAGE_CHANGED, payload: pageChangedProps
         })
     }
 }
@@ -124,57 +114,48 @@ export const pageChanged = (pageChangedProps) => {
 export const dataPerPage = (pageSizeChangedProps) => {
     return (dispatch) => {
         dispatch({
-            type: CustomerActionList.PAGESIZE_DATA_CHANGED, payload: pageSizeChangedProps
+            type: CustomerActions.PAGESIZE_DATA_CHANGED, payload: pageSizeChangedProps
         })
     }
 }
 
 export const openModal = () => {
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.OPEN_MODAL })
+        dispatch({ type: CustomerActions.OPEN_MODAL })
     }
 }
 export const closeModal = () => {
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.CLOSE_MODAL })
+        dispatch({ type: CustomerActions.CLOSE_MODAL })
     }
 }
 
 export const dataSortByName = (filterVal) => {
-    var customers = filterVal.customers.sort(sortByName);
-    if (filterVal.orderType === false) {
-        customers = customers.sort(sortByName).reverse();
-    }
+    var customers = (filterVal.orderType === true) ?
+        filterVal.customers.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase()))
+        : filterVal.products.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase())).reverse();
+
     const payload = {
-        orderByNameAEC: filterVal.orderType,
-        customers: customers
+        orderByAddressAEC: filterVal.orderType,
+        customers: customers,
+        pageSize: filterVal.pageSize
     }
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.CUSTOMER_ORDERBY_NAME, payload: payload })
+        dispatch({ type: CustomerActions.CUSTOMER_ORDERBY_NAME, payload: payload })
     }
 }
 
 export const dataSortByAddress = (filterVal) => {
-    var customers = filterVal.customers.sort(sortByAddress);
-    if (filterVal.orderType === false) {
-        customers = customers.sort(sortByAddress).reverse();
-    }
+    var customers = (filterVal.orderType === true) ?
+        filterVal.customers.sort((a, b) => sortBy(a.address.toUpperCase(), b.address.toUpperCase()))
+        : filterVal.sales.sort((a, b) => sortBy(a.address.toUpperCase(), b.address.toUpperCase())).reverse();
+
     const payload = {
         orderByAddressAEC: filterVal.orderType,
-        customers: customers
+        customers: customers,
+        pageSize: filterVal.pageSize
     }
     return (dispatch) => {
-        dispatch({ type: CustomerActionList.CUSTOMER_ORDERBY_ADDRESS, payload: payload })
+        dispatch({ type: CustomerActions.CUSTOMER_ORDERBY_ADDRESS, payload: payload })
     }
-}
-
-const sortByName = (x, y) => {
-    let v1 = x.name.toUpperCase();
-    let v2 = y.name.toUpperCase();
-    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
-}
-const sortByAddress = (x, y) => {
-    let v1 = x.address.toUpperCase();
-    let v2 = y.address.toUpperCase();
-    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
 }

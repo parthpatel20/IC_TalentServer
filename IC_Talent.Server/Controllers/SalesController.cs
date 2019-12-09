@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using IC_Talent.Database;
@@ -46,17 +47,16 @@ namespace IC_Talent.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                Sales sale = new Sales
+             Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,
                     CustomerId = postSale.CustomerId,
-                    DateSold = postSale.DateSold
-                   
+                    DateSold = DateTime.Now
                 };
                 var created = await _salesServices.CreateSalesAsync(sale);
 
-                if (created != null) return Ok(await _salesServices.GetSalesAsync());
+                if (created) return Ok(await _salesServices.GetSalesAsync());
 
                 return NotFound("Data Not Created");
             }
@@ -71,24 +71,17 @@ namespace IC_Talent.Server.Controllers
             {
                 if (updateToSale.Id.Equals(saleId))
                 {
-                    Sales sale = new Sales
-                    {
-                        Id = saleId,
-                        ProductId = updateToSale.ProductId,
-                        StoreId = updateToSale.StoreId,
-                        CustomerId = updateToSale.CustomerId,
-                        DateSold = updateToSale.DateSold
-                        };
-                    var updated = await _salesServices.UpdateSalesAsync(sale);
+                    var updated = await _salesServices.UpdateSalesAsync(updateToSale);
 
-                    if (updated != null) return Ok(await _salesServices.GetSalesAsync());
+                    if (updated) return Ok(await _salesServices.GetSalesAsync());
+
                     return NotFound("Data Not Updated");
                 }
                 return ValidationProblem("route and data id need to be same");
             }
             return ValidationProblem();
-
         }
+    
 
         [HttpDelete(ApiRoutes.Sales.Delete)]
         public async Task<IActionResult> Delete([FromRoute] int saleId)

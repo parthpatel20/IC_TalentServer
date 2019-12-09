@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { checkEnviroment, sortByName, sortByAddress } from '../helpers';
+import { checkEnviroment, sortBy } from '../helpers';
 import * as StoreActions from './index';
 import * as ApiRequest from '../constants';
 
-//get Stores
 export const fetchStores = () => {
     return (dispatch) => {
         dispatch({
@@ -24,7 +23,6 @@ export const fetchStores = () => {
     }
 }
 
-//post Customer
 export const postStore = (store) => {
     return (dispatch) => {
         dispatch({
@@ -45,10 +43,9 @@ export const postStore = (store) => {
 
 
 export const dataSortByName = (filterVal) => {
-    var stores = filterVal.stores.sort(sortByName);
-    if (filterVal.orderType === false) {
-        stores = stores.sort(sortByName).reverse();
-    }
+    var stores = (filterVal.orderType === true) ?
+    filterVal.stores.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase()))
+    : filterVal.stores.sort((a, b) => sortBy(a.name.toUpperCase(), b.name.toUpperCase())).reverse();
     const payload = {
         orderByNameAEC: filterVal.orderType,
         stores: stores,
@@ -60,10 +57,9 @@ export const dataSortByName = (filterVal) => {
 }
 
 export const dataSortByAddress = (filterVal) => {
-    var stores = filterVal.stores.sort(sortByAddress);
-    if (filterVal.orderType === false) {
-        stores = stores.sort(sortByAddress).reverse();
-    }
+    var stores = (filterVal.orderType === true) ?
+    filterVal.stores.sort((a, b) => sortBy(a.address.toUpperCase(), b.address.toUpperCase()))
+    : filterVal.stores.sort((a, b) => sortBy(a.address.toUpperCase(), b.address.toUpperCase())).reverse();
     const payload = {
         orderByAddressAEC: filterVal.orderType,
         stores: stores,
@@ -99,9 +95,6 @@ export const deleteStore = (storeId) => {
 
 export const fetchStore = (storeId) => {
     return (dispatch) => {
-        // dispatch({
-        //     type: CustomerActionList.GET_CUSTOMER_DETAIL, payload: storeId
-        // })
         let req = checkEnviroment() + ApiRequest.API_GET_STORE_DETAIL.replace("{storeId}", storeId)
 
         axios.get(req).then((response) => {

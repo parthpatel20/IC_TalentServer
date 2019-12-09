@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { checkEnviroment, sortByName, sortBy } from '../helpers';
+import { checkEnviroment, sortBy } from '../helpers';
 import * as SalesActions from './index';
 import * as ApiRequest from '../constants';
-
 export const fetchSales = () => {
     return (dispatch) => {
         dispatch({
@@ -22,15 +21,12 @@ export const fetchSales = () => {
         })
     }
 }
-
-//post Customer
 export const postSale = (sale) => {
     return (dispatch) => {
         dispatch({
             type: SalesActions.POST_SALE, payload: sale
         })
-        axios.post(checkEnviroment() + ApiRequest.API_POST_SALE, { productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId, dateSold: sale.dateSold },
-        ).then(res => {
+        axios.post(checkEnviroment() + ApiRequest.API_POST_SALE, { productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId }).then(res => {
             dispatch({
                 type: SalesActions.POST_SALE_SUCCESS, payload: res.data
             });
@@ -41,7 +37,6 @@ export const postSale = (sale) => {
         });
     }
 }
-
 export const dataSortByCustomer = (filterVal) => {
 
     var sales = (filterVal.orderType === true) ?
@@ -109,7 +104,6 @@ export const deleteSaleRequest = (saleId) => {
 }
 
 export const deleteSale = (saleId) => {
-    debugger;
     let deleteRequestForSale = checkEnviroment() + ApiRequest.API_GET_SALE_DETAIL.replace("{saleId}", saleId)
     return (dispatch) => {
         axios.delete(deleteRequestForSale).then((response) => {
@@ -127,8 +121,8 @@ export const deleteSale = (saleId) => {
 
 export const fetchSale = (saleId) => {
     return (dispatch) => {
-        let req = checkEnviroment() + ApiRequest.API_GET_SALE_DETAIL.replace("{saleId}", saleId)
-        axios.get(req).then((response) => {
+        let editRequestForSale = checkEnviroment() + ApiRequest.API_GET_SALE_DETAIL.replace("{saleId}", saleId)
+        axios.get(editRequestForSale).then((response) => {
             dispatch({
                 type: SalesActions.GET_SALE_DETAIL_FULFILLED, payload: response.data
             })
@@ -146,8 +140,7 @@ export const editSale = (sale) => {
         dispatch({
             type: SalesActions.UPDATE_SALE
         });
-
-        axios.put(updateRequestForSale, { id: sale.id, productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId, dateSold: sale.dateSold }).then((response) => {
+        axios.put(updateRequestForSale, { id: sale.id, productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId}).then((response) => {
             dispatch({
                 type: SalesActions.UPDATE_SALE_SUCCESS, payload: response.data
             })
@@ -181,7 +174,6 @@ export const productList = () => {
         })
     }
 }
-
 export const storeList = () => {
     return (dispatch) => {
         axios.get(checkEnviroment() + ApiRequest.API_GET_STORES).then((response) => {

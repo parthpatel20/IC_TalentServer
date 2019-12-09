@@ -17,10 +17,13 @@ namespace IC_Talent.Server.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProduct _productrServices;
+        private readonly Capitalize _capitalize;
 
         public ProductController(IProduct productrServices)
         {
             _productrServices = productrServices;
+            _capitalize = new Capitalize();
+
 
         }
 
@@ -49,7 +52,7 @@ namespace IC_Talent.Server.Controllers
             {
                 Product product = new Product
                 {
-                    Name = postproduct.Name,
+                    Name = _capitalize.ToCapitalize(postproduct.Name),
                     Price = postproduct.Price
                 };
                 var created = await _productrServices.CreateProductAsync(product);
@@ -72,7 +75,7 @@ namespace IC_Talent.Server.Controllers
                     Product product = new Product
                     {
                         Id = productId,
-                        Name = updateToProduct.Name,
+                        Name = _capitalize.ToCapitalize(updateToProduct.Name),
                         Price = updateToProduct.Price
                     };
                     var updated = await _productrServices.UpdateProductAsync(product);

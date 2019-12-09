@@ -6,19 +6,21 @@ using IC_Talent.Server.ReporitoryServices.Interface;
 using IC_Talent.Server.RepositoryServices.Interface;
 using IC_Talent.Server.RepositoryServices.Services;
 using IC_Talent.Services.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace IC_Talent.Server.Installers
 {
     public class DBInstaller : IInstallers
     {
-
+        private string ConnectionSt= "LocalConnection";
         public void InstallService(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("LocalConnection")));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConnectionSt)));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataContext>();

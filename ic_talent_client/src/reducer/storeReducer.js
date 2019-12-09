@@ -3,7 +3,7 @@ import * as SupportiveActions from '../Actions/constants';
 const initialState = {
     stores: [],
     store: {},
-    storesSlice: [],
+    storeSlice: [],
     storesIdforDelete: 0,
     loading: false,
     fetching: false,
@@ -32,7 +32,9 @@ const StoreReducer = (state, action) => {
         case StoreActions.POST_STORE:
             return { ...state, insertUpdateModal: true, loading: true, isInsertMode: true, error: action.payload }
         case StoreActions.POST_STORE_SUCCESS:
-            return { ...state, insertUpdateModal: false, loading: false, stores: action.payload, error: '' }
+            return { ...state, insertUpdateModal: false, loading: false, 
+                stores: action.payload, error: '' ,
+            storeSlice:action.payload.slice(state.firstItemOfThePage,state.lastItemOfthePage)}
         case StoreActions.POST_STORE_ERROR:
             return {}
         case StoreActions.GET_STORE_DETAIL:

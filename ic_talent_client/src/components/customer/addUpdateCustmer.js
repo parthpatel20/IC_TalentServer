@@ -49,7 +49,7 @@ class addUpdateCustmer extends Component {
                 }
                 this.props.postCustomer(customer);
                 if (this.props.loading === false) {
-                    this.setState({ name: '', address: '' })
+                    this.clearField();
                 }
             }
         }

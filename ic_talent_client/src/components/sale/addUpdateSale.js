@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Label, Input, Form, Dropdown, Message, Container } from 'semantic-ui-react';
-import { fetchCustomers } from './../../Actions/customerAction/customerActions';
-import { fetchStores } from './../../Actions/storeAction/storeActions';
-import { fetchProducts } from './../../Actions/productAction/productAction';
+import { Button, Input, Form, Dropdown, Message, Container } from 'semantic-ui-react';
 import { editSale, postSale, productList, storeList, customerList } from './../../Actions/salesAction/salesActions';
 class AddUpdateSale extends Component {
     constructor(props) {
@@ -13,7 +10,7 @@ class AddUpdateSale extends Component {
             productId: props.sale ? props.sale.productId : "",
             storeId: props.sale ? props.sale.storeId : "",
             customerId: props.sale ? props.sale.customerId : "",
-            dateSold: props.sale ? props.sale.dateSold : new Date().toLocaleDateString("en-US"),
+            dateSold: props.sale ? props.sale.dateSold : new Date().toLocaleDateString(),
             isEditMode: false,
             errors: {}
         }
@@ -30,7 +27,7 @@ class AddUpdateSale extends Component {
             productId: this.props.sale ? this.props.sale.productId : "",
             storeId: this.props.sale ? this.props.sale.storeId : "",
             customerId: this.props.sale ? this.props.sale.customerId : "",
-            dateSold: this.props.sale ? this.props.sale.dateSold : new Date().toLocaleDateString("en-US"),
+            dateSold: this.props.sale ? this.props.sale.dateSold : new Date().toLocaleDateString(),
             isEditMode: false,
             errors: {}
         })
@@ -81,19 +78,45 @@ class AddUpdateSale extends Component {
         (Date.parse(this.state.dateSold)) ? Date.parse(this.state.dateSold) : errors.dateSold = <Message color='red' content="Please Add date in mm/dd/yyyy format"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
+        if(isValid){
+            if(this.props.isEditMode){
+                const sale = {
+                    id:this.state.id,
+                    productId:this.state.productId,
+                    storeId:this.state.storeId,
+                    customerId:this.state.customerId,
+                    
+                       }
+                this.props.editSale(sale);
+                if (this.props.loading === false) {
+                    this.clearField();
+                }
+ 
+            }
+            else{
+                const sale = {
+                    productId:this.state.productId,
+                    storeId:this.state.storeId,
+                    customerId:this.state.customerId,
+                }
+                this.props.postSale(sale);
+                if (this.props.loading === false) {
+                    this.clearField();
+                }
+            }
+        }
     }
     handleChange = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value })
     }
     submitForm = () => {
-        { console.log(this.state) }
         const btnName = (this.props.isInsertMode) ? 'SAVE' : 'EDIT';
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
             <Form.Field inline>
                 <label>Date</label>
-                <Input placeholder='date' type='text' name="dateSold" onChange={this.handleChange}
-                    value={this.state.dateSold || new Date().toLocaleDateString("en-US")} />
+                <Input placeholder='date' disabled type='text' name="dateSold" onChange={this.handleChange}
+                    value={this.state.dateSold || new Date().toLocaleDateString()} />
                 <span>{this.state.errors.dateSold}</span>
             </Form.Field>
 
@@ -120,6 +143,7 @@ class AddUpdateSale extends Component {
     render() {
         return (
             <Container>
+                {console.log(this.props.sale)}
                 {this.submitForm()}
             </Container>
         );
@@ -128,7 +152,7 @@ class AddUpdateSale extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        sale: state.saleReducer.product,
+        sale: state.saleReducer.sale,
         saleIdforEdit: state.saleReducer.saleIdforEdit,
         openModal: state.saleReducer.openModal,
         closeModal: state.saleReducer.closeModal,
@@ -146,9 +170,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         postSale: (sale) => dispatch(postSale(sale)),
         editSale: (sale) => dispatch(editSale(sale)),
-        fetchCustomers: () => dispatch(fetchCustomers()),
-        fetchProducts: () => dispatch(fetchProducts()),
-        fetchStores: () => dispatch(fetchStores()),
         productList: () => dispatch(productList()),
         storeList: () => dispatch(storeList()),
         customerList: () => dispatch(customerList())

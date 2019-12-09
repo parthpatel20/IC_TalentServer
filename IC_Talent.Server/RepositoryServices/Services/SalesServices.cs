@@ -1,4 +1,5 @@
 ﻿using IC_Talent.Database;
+using IC_Talent.Database.ApiEntity.Request;
 using IC_Talent.Database.ApiEntity.Response;
 using IC_Talent.Server;
 using IC_Talent.Server.RepositoryServices.Interface;
@@ -20,12 +21,12 @@ namespace IC_Talent.Services.Services
         }
 
 
-        public async Task<GetSalesResponse> CreateSalesAsync(Sales postSale)
+        public async Task<bool> CreateSalesAsync(Sales postSale)
         {
             await _dataContext.Sales.AddAsync(postSale);
             var created = await _dataContext.SaveChangesAsync();
-            if (created > 0) return ConvertToSalesResponse(postSale);
-            return null;
+            if (created > 0) return true;
+            return false;
         }
 
         private GetSalesResponse ConvertToSalesResponse(Sales postSale)
@@ -34,12 +35,12 @@ namespace IC_Talent.Services.Services
             {
                 Id = postSale.Id,
                 ProductId = postSale.ProductId,
-                ProductName = postSale.Product.Name.ToUpperInvariant(),
+                ProductName = postSale.Product.Name,
                 StoreId = postSale.StoreId,
                 StoreName = postSale.Store.Name,
                 CustomerId = postSale.CustomerId,
                 CustomerName = postSale.Customer.Name,
-                DateSold = postSale.DateSold.Date
+                DateSold = postSale.DateSold.ToShortDateString()
                 
             };
             return convertToResponseSales;
@@ -68,22 +69,32 @@ namespace IC_Talent.Services.Services
         }
         public async Task<GetSalesResponse> GetSalesByIDAsync(int saleId)
         {
-            return ConvertToSalesResponse(await _dataContext.Sales.SingleOrDefaultAsync(x => x.Id == saleId));
+            return ConvertToSalesResponse(await _dataContext.Sales.Include("Customer").Include("Product").Include("Store").SingleOrDefaultAsync(x => x.Id == saleId));
         }
 
-        public async Task<GetSalesResponse> UpdateSalesAsync(Sales saleToUpdate)
+        public async Task<bool> UpdateSalesAsync(UpdateSalesRequest saleToUpdate)
         {
-            var updatedSale = _dataContext.Sales.Update(saleToUpdate);
-            if (updatedSale != null)
+
+            var dataNeedToUpdate = await _dataContext.Sales.SingleOrDefaultAsync(x => x.Id == saleToUpdate.Id);
+            if (dataNeedToUpdate != null)
             {
-                var updated = await _dataContext.SaveChangesAsync();
-                if (updated > 0)
+                dataNeedToUpdate.ProductId = saleToUpdate.ProductId;
+                dataNeedToUpdate.StoreId = saleToUpdate.StoreId;
+                dataNeedToUpdate.CustomerId = saleToUpdate.CustomerId;
+
+                var updatedSale = _dataContext.Sales.Update(dataNeedToUpdate);
+                if (updatedSale != null)
                 {
-                    var sales = await GetSalesByIDAsync(saleToUpdate.Id);
-                    if (sales != null) return sales;
+                    var updated = await _dataContext.SaveChangesAsync();
+                    if (updated > 0)
+                    {
+                        var sales = await GetSalesByIDAsync(saleToUpdate.Id);
+                        if (sales != null) return true;
+                    }
                 }
+                return false;
             }
-            return null;
+            return false;
         }
     }
 }

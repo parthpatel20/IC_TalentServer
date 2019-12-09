@@ -17,10 +17,14 @@ namespace IC_Talent.Server.Controllers
     public class StoreController : ControllerBase
     {
         private readonly IStore _storeServices;
+        private readonly Capitalize _capitalize;
+
 
         public StoreController(IStore storeServices)
         {
             _storeServices = storeServices;
+            _capitalize = new Capitalize();
+
         }
 
         [HttpGet(ApiRoutes.Store.GetAll)]
@@ -48,8 +52,8 @@ namespace IC_Talent.Server.Controllers
             {
                 Store store = new Store
                 {
-                    Name = postStore.Name,
-                    Address = postStore.Address
+                    Name = _capitalize.ToCapitalize(postStore.Name),
+                    Address = _capitalize.ToCapitalize(postStore.Address)
                 };
                 var created = await _storeServices.CreateStoreAsync(store);
 
@@ -71,8 +75,8 @@ namespace IC_Talent.Server.Controllers
                     Store store = new Store
                     {
                         Id = storeId,
-                        Name = updateToStore.Name,
-                        Address = updateToStore.Address
+                        Name = _capitalize.ToCapitalize(updateToStore.Name),
+                        Address = _capitalize.ToCapitalize(updateToStore.Address)
                     };
                     var updated = await _storeServices.UpdateStoreAsync(store);
 

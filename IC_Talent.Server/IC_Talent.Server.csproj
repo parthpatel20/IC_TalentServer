@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20191128185802_smallChanges.Designer.cs" />
     <Compile Remove="Migrations\20191128190835_smallChanges.cs" />
     <Compile Remove="Migrations\20191128190835_smallChanges.Designer.cs" />
+    <Compile Remove="Migrations\20191206055337_DataBaseComplate.cs" />
+    <Compile Remove="Migrations\20191206055337_DataBaseComplate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Grid, Loader, Icon, Button, Confirm, Modal } from 'semantic-ui-react';
-import { fetchSales, dataSortByCustomer, dataSortByProduct, dataSortByDate, dataSortByStore, deleteSaleRequest, deleteSale } from '../../Actions/salesAction/salesActions';
+import { fetchSales, fetchSale,dataSortByCustomer, dataSortByProduct, dataSortByDate, dataSortByStore, deleteSaleRequest, deleteSale } from '../../Actions/salesAction/salesActions';
 import Pages from '../helper/pagination';
 import { deleteRequestCancel, openModal, closeModal } from '../../Actions/helpers';
 import AddUpdateSale from './addUpdateSale'
@@ -90,7 +90,7 @@ class Sale extends Component {
         if (this.props.fetching) return <div>
             <Loader size="medium" active inline='centered'>Loading</Loader>
         </div>
-        if (this.props.apiError && this.props.sales.length === 0) return <h1>{this.props.apiError}</h1>
+       // if (this.props.apiError) return <h1>{this.props.apiError}</h1>
         if (this.props.fetched) {
             if (this.props.sales === undefined || this.props.sales.length === 0) return <h1>There are no such data</h1>
             return (<div className='ui container'>
@@ -162,6 +162,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchSales: () => dispatch(fetchSales()),
+        fetchSale:(saleId)=>dispatch(fetchSale(saleId)),
         dataSortByCustomer: (filterVal) => dispatch(dataSortByCustomer(filterVal)),
         dataSortByProduct: (filterVal) => dispatch(dataSortByProduct(filterVal)),
         dataSortByStore: (filterVal) => dispatch(dataSortByStore(filterVal)),
