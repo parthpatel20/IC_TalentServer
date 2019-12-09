@@ -21,12 +21,10 @@ const NavMenuLink = () => {
 const NavConfig = () => {
   return (<div className="container">
     <Switch>
-      {/* <Route exact path='/' component={} /> */}
       <Route exact path='/customers' component={Customer} />
       <Route path='/product' component={Product} />
       <Route path='/store' component={Store} />
       <Route path='/sale' component={Sale} />
-
     </Switch>
   </div>)
 }
