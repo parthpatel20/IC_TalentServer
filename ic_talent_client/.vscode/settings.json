@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/3b4a634d-3cef-45b2-83b6-b318eaf86bb8/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/icreact",
+    "appService.deploySubpath": ""
+}
