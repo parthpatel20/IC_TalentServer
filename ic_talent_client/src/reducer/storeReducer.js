@@ -24,7 +24,7 @@ const StoreReducer = (state, action) => {
     state = state || initialState
     switch (action.type) {
         case StoreActions.GET_STORES:
-            return { ...state, fetching: true }
+            return { ...state, fetching: true ,insertUpdateModal:false,isInsertMode:false}
         case StoreActions.GET_STORES_FULFILLED:
             return { ...state, fetching: false, fetched: true, stores: action.payload, storeSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage) }
         case StoreActions.GET_STORES_REJECTED:

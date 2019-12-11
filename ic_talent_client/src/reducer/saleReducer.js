@@ -32,7 +32,7 @@ const SaleReducer = (state, action) => {
     state = state || initialState
     switch (action.type) {
         case SalesActions.GET_SALES:
-            return { ...state, fetching: true }
+            return { ...state, fetching: true ,insertUpdateModal:false,isInsertMode:false}
         case SalesActions.GET_SALES_FULFILLED:
             return { ...state, fetching: false, fetched: true, apiError: null, sales: action.payload, salesSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage) }
         case SalesActions.GET_SALES_REJECTED:

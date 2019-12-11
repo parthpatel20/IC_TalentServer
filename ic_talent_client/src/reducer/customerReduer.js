@@ -9,7 +9,7 @@ const initialState = {
     fetched: false,
     apiError: 'Network Error',
     isEditMode: false,
-    isInsertMode: true,
+    isInsertMode: false,
     IsDeleteMode: false,
     insertUpdateModal: false,
     deleteModal: false,
@@ -26,7 +26,7 @@ const CustomerReducer = (state, action) => {
     console.log(action, state);
     switch (action.type) {
         case CustomerActions.GET_CUSTOMERS:
-            return { ...state, fetching: true }
+            return { ...state, fetching: true ,insertUpdateModal:false,isInsertMode:false}
         case CustomerActions.GET_CUSTOMERS_FULFILLED:
             return { ...state, fetching: false, fetched: true, customers: action.payload, customerSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage) }
         case CustomerActions.GET_CUSTOMERS_REJECTED:

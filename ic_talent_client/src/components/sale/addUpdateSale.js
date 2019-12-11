@@ -74,8 +74,6 @@ class AddUpdateSale extends Component {
         if (this.isEmpty(this.state.productId)) errors.productId = <Message color='red' content="Please Select Product "></Message>;
         if (this.isEmpty(this.state.storeId)) errors.storeId = <Message color='red' content="Please Select Store"></Message>;
         if (this.isEmpty(this.state.customerId)) errors.customerId = <Message color='red' content="Please Select Customer"></Message>;
-        if (this.isEmpty(this.state.dateSold)) errors.dateSold = <Message color='red' content="Please Add date in mm/dd/yyyy format"></Message>;
-        (Date.parse(this.state.dateSold)) ? Date.parse(this.state.dateSold) : errors.dateSold = <Message color='red' content="Please Add date in mm/dd/yyyy format"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
         if(isValid){
@@ -84,8 +82,7 @@ class AddUpdateSale extends Component {
                     id:this.state.id,
                     productId:this.state.productId,
                     storeId:this.state.storeId,
-                    customerId:this.state.customerId,
-                    
+                    customerId:this.state.customerId,                   
                        }
                 this.props.editSale(sale);
                 if (this.props.loading === false) {

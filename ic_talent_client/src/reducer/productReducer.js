@@ -26,7 +26,7 @@ const productReducer = (state, action) => {
     state = state || initialState
     switch (action.type) {
         case ProductActions.GET_PRODUCTS:
-            return { ...state, fetching: true }
+            return { ...state, fetching: true ,insertUpdateModal:false,isInsertMode:false}
         case ProductActions.GET_PRODUCTS_FULFILLED:
             return { ...state, fetching: false, fetched: true, products: action.payload, productSlice: action.payload.slice(state.firstItemOfThePage, state.lastItemOfthePage) }
         case ProductActions.GET_PRODUCTS_REJECTED:
