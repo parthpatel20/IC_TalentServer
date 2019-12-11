@@ -28,7 +28,6 @@ class AddUpdateProduct extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let errors = {};
-        console.log();
         
         if (this.isEmpty(this.state.name)) errors.name = <Message color='red' content="Name is required"></Message>;
         if (this.isEmpty(this.state.price)) errors.price = <Message color='red' content="Price is required"></Message>;

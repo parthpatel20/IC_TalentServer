@@ -28,7 +28,6 @@ const initialState = {
     customerList: []
 };
 const SaleReducer = (state, action) => {
-    console.log(action, state)
     state = state || initialState
     switch (action.type) {
         case SalesActions.GET_SALES:

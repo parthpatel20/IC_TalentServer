@@ -61,7 +61,6 @@ class Pages extends Component {
 
 }
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         pageSize: state.pagingReducer.pageSize,
         currentPage: state.pagingReducer.currentPage

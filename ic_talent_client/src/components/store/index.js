@@ -136,7 +136,6 @@ class Store extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('StoreIndex', state)
     return {
         stores: state.storeReducer.stores,
         store: state.storeReducer.store,

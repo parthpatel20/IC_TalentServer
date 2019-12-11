@@ -181,7 +181,6 @@ class Customer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('CSR', state)
     return {
         customers: state.customerReducer.customers,
         fetching: state.customerReducer.fetching,

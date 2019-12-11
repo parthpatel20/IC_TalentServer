@@ -23,7 +23,6 @@ const initialState = {
 
 const CustomerReducer = (state, action) => {
     state = state || initialState;
-    console.log(action, state);
     switch (action.type) {
         case CustomerActions.GET_CUSTOMERS:
             return { ...state, fetching: true ,insertUpdateModal:false,isInsertMode:false}

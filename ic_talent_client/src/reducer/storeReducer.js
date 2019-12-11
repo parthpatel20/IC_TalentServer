@@ -20,7 +20,6 @@ const initialState = {
     lastItemOfthePage: 10
 };
 const StoreReducer = (state, action) => {
-    console.log(action, state)
     state = state || initialState
     switch (action.type) {
         case StoreActions.GET_STORES:

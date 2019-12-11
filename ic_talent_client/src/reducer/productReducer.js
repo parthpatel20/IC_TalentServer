@@ -22,7 +22,6 @@ const initialState = {
 };
 
 const productReducer = (state, action) => {
-    console.log(action, state)
     state = state || initialState
     switch (action.type) {
         case ProductActions.GET_PRODUCTS:

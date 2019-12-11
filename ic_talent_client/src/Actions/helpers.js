@@ -39,23 +39,6 @@ export const closeModal = () => {
     }
 }
 
-export const sortByName = (x, y) => {
-    let v1 = x.name.toUpperCase();
-    let v2 = y.name.toUpperCase();
-    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
-}
-export const sortByAddress = (x, y) => {
-    let v1 = x.address.toUpperCase();
-    let v2 = y.address.toUpperCase();
-    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
-}
-
-export const sortByPrice = (x, y) => {
-    let v1 = x.price
-    let v2 = y.price
-    return ((v1 === v2) ? 0 : ((v1 > v2) ? 1 : -1));
-}
-
 export const sortBy = (x, y) => {
     return ((x === y) ? 0 : ((x > y) ? 1 : -1));
 }

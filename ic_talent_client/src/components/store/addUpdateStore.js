@@ -91,7 +91,6 @@ class AddUpdateStore extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('ADDUPDATESTORE', state)
     return {
         store: state.storeReducer.store,
         storeIdforEdit: state.storeReducer.storeIdforEdit,

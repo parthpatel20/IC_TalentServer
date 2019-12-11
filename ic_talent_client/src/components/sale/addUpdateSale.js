@@ -140,7 +140,6 @@ class AddUpdateSale extends Component {
     render() {
         return (
             <Container>
-                {console.log(this.props.sale)}
                 {this.submitForm()}
             </Container>
         );
