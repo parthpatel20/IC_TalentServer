@@ -92,8 +92,6 @@ class AddUpdateSale extends Component {
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
         if(isValid){
-            debugger;
-            this.dateforApi(this.state.dateSold);
             if(this.props.isEditMode){
                 const sale = {
                     id:this.state.id,

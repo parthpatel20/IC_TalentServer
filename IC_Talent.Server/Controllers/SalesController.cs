@@ -45,7 +45,9 @@ namespace IC_Talent.Server.Controllers
         [HttpPost(ApiRoutes.Sales.Create)]
         public async Task<IActionResult> Create([FromBody] CreateSalesRequest postSale)
         {
-            var dt = Convert.ToDateTime(postSale.DateSold);
+            var dts = Convert.ToDateTime(postSale.DateSold);
+            var dt = DateTime.Parse(postSale.DateSold);
+
             ///var dts = new DateTime(dt); //DateTime.ParseExact(postSale.DateSold, "mm/dd/yy", CultureInfo.CurrentCulture);
             if (ModelState.IsValid)
             {
