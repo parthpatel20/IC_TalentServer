@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store'
 import { Provider } from 'react-redux';
+import 'react-datepicker/dist/react-datepicker.css';
 import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -8,7 +8,6 @@ const initialState = {
 }
 const PagingReducer = (state, action) => {
     state = state || initialState;
-    console.log(action, state)
     switch (action.type) {
         case PagingActions.PAGING_SET:
             return {

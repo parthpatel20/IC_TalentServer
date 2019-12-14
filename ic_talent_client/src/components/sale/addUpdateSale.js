@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Input, Form, Dropdown, Message, Container } from 'semantic-ui-react';
 import { editSale, postSale, productList, storeList, customerList } from './../../Actions/salesAction/salesActions';
+import DatePicker from "react-datepicker";
+import CloseButton from '../helper/closeButton';
 class AddUpdateSale extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +46,6 @@ class AddUpdateSale extends Component {
             </Dropdown>)
         }
     }
-
     drpStores = () => {
         if (this.props.stores.length !== 0) {
             let options = this.props.stores;
@@ -64,9 +65,22 @@ class AddUpdateSale extends Component {
             </Dropdown>)
         }
     }
-
+    datepicker = ()=>{
+    return(<DatePicker
+    dateFormat="dd/MM/yyyy"
+    selected={(this.state.dateSold)?new Date(this.state.dateSold):''}
+    placeholderText='dd/mm/yyyy'
+    onChange={(date)=>   this.setState({ dateSold: date.toLocaleDateString()})}
+    customInput={<Input />} />
+)
+    }
     isEmpty = (val) => {
         return (typeof val === 'undefined' || val.length === 0 || val === "" || !val)
+    }
+    dateforApi=(date)=>{
+        var mmTodd = date.split('/');
+        var dt = [mmTodd[1],mmTodd[0],mmTodd[2]].join('/')
+        return dt;    
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -74,15 +88,19 @@ class AddUpdateSale extends Component {
         if (this.isEmpty(this.state.productId)) errors.productId = <Message color='red' content="Please Select Product "></Message>;
         if (this.isEmpty(this.state.storeId)) errors.storeId = <Message color='red' content="Please Select Store"></Message>;
         if (this.isEmpty(this.state.customerId)) errors.customerId = <Message color='red' content="Please Select Customer"></Message>;
+        if (this.isEmpty(this.state.dateSold)) errors.dateSold = <Message color='red' content="Please Select Date"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
         if(isValid){
+            debugger;
+            this.dateforApi(this.state.dateSold);
             if(this.props.isEditMode){
                 const sale = {
                     id:this.state.id,
                     productId:this.state.productId,
                     storeId:this.state.storeId,
-                    customerId:this.state.customerId,                   
+                    customerId:this.state.customerId,   
+                    dateSold: this.dateforApi(this.state.dateSold)                
                        }
                 this.props.editSale(sale);
                 if (this.props.loading === false) {
@@ -95,6 +113,7 @@ class AddUpdateSale extends Component {
                     productId:this.state.productId,
                     storeId:this.state.storeId,
                     customerId:this.state.customerId,
+                    dateSold:this.dateforApi(this.state.dateSold)
                 }
                 this.props.postSale(sale);
                 if (this.props.loading === false) {
@@ -108,33 +127,33 @@ class AddUpdateSale extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
     submitForm = () => {
+       
         const btnName = (this.props.isInsertMode) ? 'SAVE' : 'EDIT';
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
-            <Form.Field inline>
+            <Form.Field>
                 <label>Date</label>
-                <Input placeholder='date' disabled type='text' name="dateSold" onChange={this.handleChange}
-                    value={this.state.dateSold || new Date().toLocaleDateString()} />
+                {this.datepicker()}
                 <span>{this.state.errors.dateSold}</span>
             </Form.Field>
 
-            <Form.Field inline>
+            <Form.Field>
                 <label>Product</label>
                 {this.drpProducts()}
                 <span>{this.state.errors.productId}</span>
             </Form.Field>
 
-            <Form.Field inline>
+            <Form.Field >
                 <label>Store</label>
                 {this.drpStores()}
                 <span>{this.state.errors.storeId}</span>
             </Form.Field>
-            <Form.Field inline>
+            <Form.Field >
                 <label>Customer</label>
                 {this.drpCustomers()}
                 <span>{this.state.errors.customerId}</span>
             </Form.Field>
             <Button content={btnName} type='submit' color='green' icon='check' labelPosition='right' />
-            <Button type='button' content='CLEAR' color='black' onClick={this.clearField} />
+            <CloseButton/>
         </Form>);
     }
     render() {
@@ -168,7 +187,7 @@ const mapDispatchToProps = (dispatch) => {
         editSale: (sale) => dispatch(editSale(sale)),
         productList: () => dispatch(productList()),
         storeList: () => dispatch(storeList()),
-        customerList: () => dispatch(customerList())
+        customerList: () => dispatch(customerList()),
     };
 }
 export default connect(

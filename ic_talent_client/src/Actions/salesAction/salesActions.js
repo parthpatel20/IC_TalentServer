@@ -26,7 +26,7 @@ export const postSale = (sale) => {
         dispatch({
             type: SalesActions.POST_SALE, payload: sale
         })
-        axios.post(checkEnviroment() + ApiRequest.API_POST_SALE, { productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId }).then(res => {
+        axios.post(checkEnviroment() + ApiRequest.API_POST_SALE, { productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId ,dateSold:sale.dateSold}).then(res => {
             dispatch({
                 type: SalesActions.POST_SALE_SUCCESS, payload: res.data
             });
@@ -140,7 +140,7 @@ export const editSale = (sale) => {
         dispatch({
             type: SalesActions.UPDATE_SALE
         });
-        axios.put(updateRequestForSale, { id: sale.id, productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId}).then((response) => {
+        axios.put(updateRequestForSale, { id: sale.id, productId: sale.productId, customerId: sale.customerId, storeId: sale.storeId,dateSold:sale.dateSold}).then((response) => {
             dispatch({
                 type: SalesActions.UPDATE_SALE_SUCCESS, payload: response.data
             })

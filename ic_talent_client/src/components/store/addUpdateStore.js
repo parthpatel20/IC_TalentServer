@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Label, Input, Form, Message, Container } from 'semantic-ui-react';
+import { Button,  Input, Form, Message, Container } from 'semantic-ui-react';
 import { postStore, editStore } from '../../Actions/storeAction/storeActions'
+import CloseButton from '../helper/closeButton'
 
 class AddUpdateStore extends Component {
     constructor(props) {
@@ -65,20 +66,20 @@ class AddUpdateStore extends Component {
     }
     submitForm = () => {
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
-            <Form.Field inline  >
-                <Label>Name</Label>
+            <Form.Field  >
+                <label>Name</label>
                 <Input placeholder='Jhon' name="name" onChange={this.handleChange} value={this.state.name || ''} />
                 <span>{this.state.errors.name}</span>
             </Form.Field>
-            <Form.Field inline>
-                <Label  >Address</Label>
+            <Form.Field>
+                <label  >Address</label>
                 <Input placeholder='18 block chch' name="address" onChange={this.handleChange} value={this.state.address || ''} />
                 <span>{this.state.errors.address}</span>
             </Form.Field>
             {(this.props.isInsertMode) ?
                 <Button content='SAVE' type='submit' color='green' icon='check' labelPosition='right' /> :
                 <Button content='EDIT' color='green' icon='check' labelPosition='right' type='submit' />}
-            <Button type='button' content='Clear' color='black' onClick={this.clearField} />
+            <CloseButton/>
         </Form>);
     }
     render() {

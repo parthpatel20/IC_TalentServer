@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Label, Input, Form, Message, Container } from 'semantic-ui-react';
-import { postProduct, editProduct } from '../../Actions/productAction/productAction'
+import { Button, Input, Form, Message, Container } from 'semantic-ui-react';
+import { postProduct, editProduct } from '../../Actions/productAction/productAction';
+import CloseButton from '../helper/closeButton'
+
 class AddUpdateProduct extends Component {
     constructor(props) {
         super(props);
@@ -72,13 +74,13 @@ class AddUpdateProduct extends Component {
     submitForm = () => {
         const btnName = (this.props.isInsertMode) ? 'SAVE' : 'EDIT';
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
-            <Form.Field inline  >
-                <Label>Name</Label>
+            <Form.Field >
+                <label>Name</label>
                 <Input placeholder='Jhon' name="name" onChange={this.handleChange} value={this.state.name || ''} />
                 <span>{this.state.errors.name}</span>
             </Form.Field>
-            <Form.Field inline>
-                <Label>Price</Label>
+            <Form.Field>
+                <label>Price</label>
                 <Input type="number" 
                 name="price" 
                 step = "0.1"
@@ -89,7 +91,7 @@ class AddUpdateProduct extends Component {
                 <span>{this.state.errors.price}</span>
             </Form.Field>
             <Button content={btnName} type='submit' color='green' icon='check' labelPosition='right' />
-            <Button type='button' content='CLEAR' color='black' onClick={this.clearField} />
+            <CloseButton/>
         </Form>);
     }
 

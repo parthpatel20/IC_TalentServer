@@ -122,8 +122,7 @@ class Customer extends Component {
         return (
             this.props.customerSlice.map((customer, i) => {
                 return (<tr key={i} className="ui table row celled">
-                    <td>{customer.id}</td>
-                    <td>{customer.name}</td>
+                        <td>{customer.name}</td>
                     <td>{customer.address}</td>
                     <td><Button color="orange" onClick={() => this.props.fetchCustomer(customer.id)} >Edit</Button>
                         <Button color="red" onClick={() => this.deleteCustomerfromList(customer.id)}  >Delete</Button> </td>
@@ -144,7 +143,6 @@ class Customer extends Component {
                 <table className="ui table">
                     <thead className="ui table header"  >
                         <tr className="ui table row">
-                            <th>ID</th>
                             <th onClick={() => this.orderByName()}>NAME<Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th onClick={() => this.orderByAddress()}> ADDRESS <Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th>Actions</th>

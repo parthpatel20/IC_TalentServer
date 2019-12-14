@@ -75,7 +75,6 @@ class Sale extends Component {
         return (
             this.props.saleSlice.map((sale, i) => {
                 return (<tr key={i} className="ui table row celled">
-                    <td>{sale.id}</td>
                     <td>{sale.productName}</td>
                     <td>{sale.customerName}</td>
                     <td>{sale.storeName}</td>
@@ -97,7 +96,6 @@ class Sale extends Component {
                 <table className="ui table">
                     <thead className="ui table header"  >
                         <tr className="ui table row">
-                            <th>ID</th>
                             <th onClick={() => this.orderByProduct()}>PRODUCT<Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th onClick={() => this.orderByCustomer()}> CUSTOMER <Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th onClick={() => this.orderByStore()}> STORE <Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>

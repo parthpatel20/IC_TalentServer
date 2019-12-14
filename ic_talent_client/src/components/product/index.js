@@ -73,7 +73,6 @@ class Product extends Component {
         return (
             this.props.productSlice.map((product, i) => {
                 return (<tr key={i} className="ui table row celled">
-                    <td>{product.id}</td>
                     <td>{product.name}</td>
                     <td>${product.price}</td>
                     <td><Button color="orange" onClick={() => this.props.fetchProduct(product.id)} >Edit</Button>
@@ -93,7 +92,6 @@ class Product extends Component {
                 <table className="ui table">
                     <thead className="ui table header"  >
                         <tr className="ui table row">
-                            <th>ID</th>
                             <th onClick={() => this.orderByName()}>NAME<Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th onClick={() => this.orderByPrice()}> PRICE <Icon name='sort up' size='tiny' /><Icon name='sort down' size='tiny' /></th>
                             <th>Actions</th>
