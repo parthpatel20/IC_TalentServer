@@ -1,6 +1,6 @@
 
 //Root
-export const DEV_ROOT = "https://localhost:5001/api";
+export const DEV_ROOT = "https://icreactapi.azurewebsites.net/api";//"https://localhost:5001/api";
 export const PRODUCTION_ROOT = "https://icreactapi.azurewebsites.net/api";
 
 //customer
