@@ -19,9 +19,7 @@ namespace IC_Talent.Services.Services
         {
             _dataContext = dataContext;
         }
-
-
-        public async Task<bool> CreateSalesAsync(Sales postSale)
+       public async Task<bool> CreateSalesAsync(Sales postSale)
         {
             await _dataContext.Sales.AddAsync(postSale);
             var created = await _dataContext.SaveChangesAsync();
@@ -75,14 +73,13 @@ namespace IC_Talent.Services.Services
         public async Task<bool> UpdateSalesAsync(UpdateSalesRequest saleToUpdate)
         {
 
-            var dt = Convert.ToDateTime(saleToUpdate.DateSold);
             var dataNeedToUpdate = await _dataContext.Sales.SingleOrDefaultAsync(x => x.Id == saleToUpdate.Id);
             if (dataNeedToUpdate != null)
             {
                 dataNeedToUpdate.ProductId = saleToUpdate.ProductId;
                 dataNeedToUpdate.StoreId = saleToUpdate.StoreId;
                 dataNeedToUpdate.CustomerId = saleToUpdate.CustomerId;
-                dataNeedToUpdate.DateSold = dt; 
+                dataNeedToUpdate.DateSold = saleToUpdate.DateSold; 
                 var updatedSale = _dataContext.Sales.Update(dataNeedToUpdate);
                 if (updatedSale != null)
                 {

@@ -77,11 +77,6 @@ class AddUpdateSale extends Component {
     isEmpty = (val) => {
         return (typeof val === 'undefined' || val.length === 0 || val === "" || !val)
     }
-    dateforApi=(date)=>{
-        var mmTodd = date.split('/');
-        var dt = [mmTodd[1],mmTodd[0],mmTodd[2]].join('/')
-        return dt;    
-    }
     handleSubmit = (e) => {
         e.preventDefault();
         let errors = {};
@@ -98,7 +93,7 @@ class AddUpdateSale extends Component {
                     productId:this.state.productId,
                     storeId:this.state.storeId,
                     customerId:this.state.customerId,   
-                    dateSold: this.dateforApi(this.state.dateSold)                
+                    dateSold: JSON.parse(JSON.stringify(new Date(this.state.dateSold)))                
                        }
                 this.props.editSale(sale);
                 if (this.props.loading === false) {
@@ -111,8 +106,9 @@ class AddUpdateSale extends Component {
                     productId:this.state.productId,
                     storeId:this.state.storeId,
                     customerId:this.state.customerId,
-                    dateSold:this.dateforApi(this.state.dateSold)
+                    dateSold:JSON.parse(JSON.stringify(new Date(this.state.dateSold)))
                 }
+                
                 this.props.postSale(sale);
                 if (this.props.loading === false) {
                     this.clearField();

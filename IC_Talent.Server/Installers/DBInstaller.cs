@@ -17,7 +17,7 @@ namespace IC_Talent.Server.Installers
 {
     public class DBInstaller : IInstallers
     {
-        private string ConnectionSt= "ServerConnection";
+        private string ConnectionSt= "LocalConnection";
         public void InstallService(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString(ConnectionSt)));

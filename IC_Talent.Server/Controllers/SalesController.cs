@@ -45,18 +45,14 @@ namespace IC_Talent.Server.Controllers
         [HttpPost(ApiRoutes.Sales.Create)]
         public async Task<IActionResult> Create([FromBody] CreateSalesRequest postSale)
         {
-            var dts = Convert.ToDateTime(postSale.DateSold);
-            var dt = DateTime.Parse(postSale.DateSold);
-
-            ///var dts = new DateTime(dt); //DateTime.ParseExact(postSale.DateSold, "mm/dd/yy", CultureInfo.CurrentCulture);
-            if (ModelState.IsValid)
+          if (ModelState.IsValid)
             {
                 Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,
                     CustomerId = postSale.CustomerId,
-                    DateSold = dt
+                    DateSold = postSale.DateSold
              };
                 var created = await _salesServices.CreateSalesAsync(sale);
 
