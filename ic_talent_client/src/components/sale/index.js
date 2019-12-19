@@ -71,6 +71,10 @@ class Sale extends Component {
             </Modal.Content>
         </Modal>)
     }
+    dateFormat=(val)=>{
+        var date = val.split("/");
+        return date[1]+'/'+date[0]+'/'+date[2]
+    }
     populateSaleData = () => {
         return (
             this.props.saleSlice.map((sale, i) => {
@@ -78,7 +82,7 @@ class Sale extends Component {
                     <td>{sale.productName}</td>
                     <td>{sale.customerName}</td>
                     <td>{sale.storeName}</td>
-                    <td>{new Date(sale.dateSold).toLocaleDateString()}</td>
+                    <td>{ this.dateFormat( new Date(sale.dateSold).toLocaleDateString())}</td>
                     <td><Button color="orange" onClick={() => this.props.fetchSale(sale.id)} >Edit</Button>
                         <Button color="red" onClick={() => this.deleteSalefromList(sale.id)}  >Delete</Button> </td>
                 </tr>)

@@ -47,9 +47,8 @@ namespace IC_Talent.Server.Controllers
         {
           if (ModelState.IsValid)
             {
-                var dt = postSale.DateSold.ToLocalTime();
-
-                Sales sale = new Sales
+                var dt = DateTime.Parse(postSale.DateSold);
+            Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,

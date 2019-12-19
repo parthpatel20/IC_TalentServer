@@ -72,7 +72,7 @@ namespace IC_Talent.Services.Services
 
         public async Task<bool> UpdateSalesAsync(UpdateSalesRequest saleToUpdate)
         {
-            var dt = saleToUpdate.DateSold.ToLocalTime();
+            var dt = DateTime.Parse(saleToUpdate.DateSold);
             var dataNeedToUpdate = await _dataContext.Sales.SingleOrDefaultAsync(x => x.Id == saleToUpdate.Id);
             if (dataNeedToUpdate != null)
             {

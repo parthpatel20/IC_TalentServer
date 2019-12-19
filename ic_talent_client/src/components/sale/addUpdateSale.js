@@ -29,7 +29,7 @@ class AddUpdateSale extends Component {
             productId: this.props.sale ? this.props.sale.productId : "",
             storeId: this.props.sale ? this.props.sale.storeId : "",
             customerId: this.props.sale ? this.props.sale.customerId : "",
-            dateSold: this.props.sale ? new Date(this.state.dateSold): "",
+            dateSold: this.props.sale ? new Date(this.state.dateSold) : "",
             isEditMode: false,
             errors: {}
         })
@@ -65,17 +65,21 @@ class AddUpdateSale extends Component {
             </Dropdown>)
         }
     }
-    datepicker = ()=>{
-    return(<DatePicker
-    dateFormat="dd/MM/yyyy"
-    selected={(this.state.dateSold)? new Date(this.state.dateSold):''}
-    placeholderText='dd/mm/yyyy'
-    onChange={(date)=>   this.setState({ dateSold: new Date(date)})}
-    customInput={<Input />} />
-)
+    datepicker = () => {
+        return (<DatePicker
+            dateFormat="dd/MM/yyyy"
+            selected={(this.state.dateSold) ? new Date(this.state.dateSold) : ''}
+            placeholderText='dd/mm/yyyy'
+            onChange={(date) => this.setState({ dateSold: new Date(date) })}
+            customInput={<Input />} />
+        )
     }
     isEmpty = (val) => {
         return (typeof val === 'undefined' || val.length === 0 || val === "" || !val)
+    }
+    dateFormat = (val) => {
+        var date = val.split("/");
+        return date[1] + '/' + date[0] + '/' + date[2]
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -86,32 +90,28 @@ class AddUpdateSale extends Component {
         if (this.isEmpty(this.state.dateSold)) errors.dateSold = <Message color='red' content="Please Select Date"></Message>;
         this.setState({ errors });
         const isValid = Object.keys(errors).length === 0;
-        if(isValid){
-            if(this.props.isEditMode){
+        if (isValid) {
+            if (this.props.isEditMode) {
                 const sale = {
-                    id:this.state.id,
-                    productId:this.state.productId,
-                    storeId:this.state.storeId,
-                    customerId:this.state.customerId,   
-                    dateSold: new Date(this.state.dateSold)               
-                       }
-                       this.props.editSale(sale);
+                    id: this.state.id,
+                    productId: this.state.productId,
+                    storeId: this.state.storeId,
+                    customerId: this.state.customerId,
+                    dateSold: this.dateFormat(new Date(this.state.dateSold).toLocaleDateString())
+                }
+                this.props.editSale(sale);
                 if (this.props.loading === false) {
                     this.clearField();
                 }
- 
             }
-            else{
+            else {
                 const sale = {
-                    productId:this.state.productId,
-                    storeId:this.state.storeId,
-                    customerId:this.state.customerId,
-                    dateSold:new Date(this.state.dateSold)
+                    productId: this.state.productId,
+                    storeId: this.state.storeId,
+                    customerId: this.state.customerId,
+                    dateSold: this.dateFormat(new Date(this.state.dateSold).toLocaleDateString())
                 }
-               
-                       
                 this.props.postSale(sale);
-                
                 if (this.props.loading === false) {
                     this.clearField();
                 }
@@ -123,7 +123,6 @@ class AddUpdateSale extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
     submitForm = () => {
-       
         const btnName = (this.props.isInsertMode) ? 'SAVE' : 'EDIT';
         return (<Form onSubmit={this.handleSubmit} loading={this.props.loading}>
             <Form.Field>
@@ -149,7 +148,7 @@ class AddUpdateSale extends Component {
                 <span>{this.state.errors.customerId}</span>
             </Form.Field>
             <Button content={btnName} type='submit' color='green' icon='check' labelPosition='right' />
-            <CloseButton/>
+            <CloseButton />
         </Form>);
     }
     render() {
