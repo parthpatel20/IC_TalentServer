@@ -97,7 +97,7 @@ class AddUpdateSale extends Component {
                     productId: this.state.productId,
                     storeId: this.state.storeId,
                     customerId: this.state.customerId,
-                    dateSold: this.dateFormat(new Date(this.state.dateSold).toLocaleDateString())
+                    dateSold: new Date(this.state.dateSold).toLocaleDateString()
                 }
                 this.props.editSale(sale);
                 if (this.props.loading === false) {
@@ -109,8 +109,9 @@ class AddUpdateSale extends Component {
                     productId: this.state.productId,
                     storeId: this.state.storeId,
                     customerId: this.state.customerId,
-                    dateSold: this.dateFormat(new Date(this.state.dateSold).toLocaleDateString())
+                    dateSold: new Date(this.state.dateSold).toLocaleDateString()
                 }
+                console.log(sale);
                 this.props.postSale(sale);
                 if (this.props.loading === false) {
                     this.clearField();
