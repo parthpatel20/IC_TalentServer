@@ -17,6 +17,6 @@ namespace IC_Talent.Database.ApiEntity.Response
         public string StoreName { get; set; }
 
 
-        public string DateSold { get; set; }
+        public DateTime DateSold { get; set; }
     }
 }

@@ -12,7 +12,7 @@ class AddUpdateSale extends Component {
             productId: props.sale ? props.sale.productId : "",
             storeId: props.sale ? props.sale.storeId : "",
             customerId: props.sale ? props.sale.customerId : "",
-            dateSold: props.sale ? props.sale.dateSold : new Date().toLocaleDateString(),
+            dateSold: props.sale ? props.sale.dateSold : new Date(),
             isEditMode: false,
             errors: {}
         }
@@ -29,7 +29,7 @@ class AddUpdateSale extends Component {
             productId: this.props.sale ? this.props.sale.productId : "",
             storeId: this.props.sale ? this.props.sale.storeId : "",
             customerId: this.props.sale ? this.props.sale.customerId : "",
-            dateSold: this.props.sale ? this.props.sale.dateSold : new Date().toLocaleDateString(),
+            dateSold: this.props.sale ? new Date(this.state.dateSold): "",
             isEditMode: false,
             errors: {}
         })
@@ -68,9 +68,9 @@ class AddUpdateSale extends Component {
     datepicker = ()=>{
     return(<DatePicker
     dateFormat="dd/MM/yyyy"
-    selected={(this.state.dateSold)?new Date(this.state.dateSold):''}
+    selected={(this.state.dateSold)? new Date(this.state.dateSold):''}
     placeholderText='dd/mm/yyyy'
-    onChange={(date)=>   this.setState({ dateSold: date.toLocaleDateString()})}
+    onChange={(date)=>   this.setState({ dateSold: new Date(date)})}
     customInput={<Input />} />
 )
     }
@@ -93,9 +93,9 @@ class AddUpdateSale extends Component {
                     productId:this.state.productId,
                     storeId:this.state.storeId,
                     customerId:this.state.customerId,   
-                    dateSold: JSON.parse(JSON.stringify(new Date(this.state.dateSold)))                
+                    dateSold: new Date(this.state.dateSold)               
                        }
-                this.props.editSale(sale);
+                       this.props.editSale(sale);
                 if (this.props.loading === false) {
                     this.clearField();
                 }
@@ -106,10 +106,12 @@ class AddUpdateSale extends Component {
                     productId:this.state.productId,
                     storeId:this.state.storeId,
                     customerId:this.state.customerId,
-                    dateSold:JSON.parse(JSON.stringify(new Date(this.state.dateSold)))
+                    dateSold:new Date(this.state.dateSold)
                 }
-                
+               
+                       
                 this.props.postSale(sale);
+                
                 if (this.props.loading === false) {
                     this.clearField();
                 }

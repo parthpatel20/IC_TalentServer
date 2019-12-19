@@ -47,13 +47,15 @@ namespace IC_Talent.Server.Controllers
         {
           if (ModelState.IsValid)
             {
+                var dt = postSale.DateSold.ToLocalTime();
+
                 Sales sale = new Sales
                 {
                     ProductId = postSale.ProductId,
                     StoreId = postSale.StoreId,
                     CustomerId = postSale.CustomerId,
-                    DateSold = postSale.DateSold
-             };
+                    DateSold = dt
+                };
                 var created = await _salesServices.CreateSalesAsync(sale);
 
                 if (created) return Ok(await _salesServices.GetSalesAsync());

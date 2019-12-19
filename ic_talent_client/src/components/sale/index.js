@@ -78,7 +78,7 @@ class Sale extends Component {
                     <td>{sale.productName}</td>
                     <td>{sale.customerName}</td>
                     <td>{sale.storeName}</td>
-                    <td>{sale.dateSold}</td>
+                    <td>{new Date(sale.dateSold).toLocaleDateString()}</td>
                     <td><Button color="orange" onClick={() => this.props.fetchSale(sale.id)} >Edit</Button>
                         <Button color="red" onClick={() => this.deleteSalefromList(sale.id)}  >Delete</Button> </td>
                 </tr>)

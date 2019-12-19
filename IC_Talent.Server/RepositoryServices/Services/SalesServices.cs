@@ -38,7 +38,7 @@ namespace IC_Talent.Services.Services
                 StoreName = postSale.Store.Name,
                 CustomerId = postSale.CustomerId,
                 CustomerName = postSale.Customer.Name,
-                DateSold = postSale.DateSold.ToShortDateString()
+                DateSold = postSale.DateSold
                 
             };
             return convertToResponseSales;
@@ -72,24 +72,22 @@ namespace IC_Talent.Services.Services
 
         public async Task<bool> UpdateSalesAsync(UpdateSalesRequest saleToUpdate)
         {
-
+            var dt = saleToUpdate.DateSold.ToLocalTime();
             var dataNeedToUpdate = await _dataContext.Sales.SingleOrDefaultAsync(x => x.Id == saleToUpdate.Id);
             if (dataNeedToUpdate != null)
             {
                 dataNeedToUpdate.ProductId = saleToUpdate.ProductId;
                 dataNeedToUpdate.StoreId = saleToUpdate.StoreId;
                 dataNeedToUpdate.CustomerId = saleToUpdate.CustomerId;
-                dataNeedToUpdate.DateSold = saleToUpdate.DateSold; 
-                var updatedSale = _dataContext.Sales.Update(dataNeedToUpdate);
-                if (updatedSale != null)
-                {
+                dataNeedToUpdate.DateSold = dt;
+                    _dataContext.Entry(dataNeedToUpdate).State =  EntityState.Modified;
                     var updated = await _dataContext.SaveChangesAsync();
                     if (updated > 0)
                     {
                         var sales = await GetSalesByIDAsync(saleToUpdate.Id);
                         if (sales != null) return true;
                     }
-                }
+                
                 return false;
             }
             return false;
